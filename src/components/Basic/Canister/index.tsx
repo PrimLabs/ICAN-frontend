@@ -97,9 +97,12 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
             <div
                 className={`${
                     open ? "flex" : "hidden"
-                } w-full bg-slate-50 rounded-b px-[40px] py-12 text-3xl`}
+                } w-full flex-col bg-slate-50 rounded-b px-[40px] py-12`}
             >
-                {desc}
+                <div className="flex pb-10 text-4xl">Description: {desc}</div>
+                <div className="flex pb-10 text-4xl">
+                    Canister id: {String(canisterId)}
+                </div>
             </div>
         </>
     );
