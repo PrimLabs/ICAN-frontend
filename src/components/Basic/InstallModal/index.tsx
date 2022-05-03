@@ -78,7 +78,7 @@ export const InstallModal = ({ open, setOpen, canisterId }: Props) => {
     return (
         <div
             className={`fixed w-full h-full top-0 left-0
-            ${open ? `flex` : `hidden`} items-center justify-center`}
+            ${open ? `flex` : `hidden`} items-center justify-center z-50`}
         >
             <div
                 className="absolute w-full h-full bg-gray-900 opacity-25"

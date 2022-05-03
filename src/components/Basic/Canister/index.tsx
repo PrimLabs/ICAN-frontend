@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { formatNumber } from "@/utils/common";
 
 interface Props {
     index: number;
@@ -22,11 +23,12 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
     const [open, setOpen] = useState<boolean>(false);
     const [del, setDel] = useState<number>(0);
     const [install, setInstall] = useState<boolean>(false);
+    const [status, setStatus] = useState<any>();
     const { hubId }: { hubId: string } = useParams();
     const fetch = async () => {
         console.time("status");
         const res = await ManageApi.getCanisterStatus(canisterId);
-        console.log(res);
+        setStatus(res);
         console.timeEnd("status");
     };
 
@@ -61,7 +63,15 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                 <div className="flex items-center w-[120px] text-6xl">
                     {name}
                 </div>
-
+                {status ? (
+                    <div className="flex items-center w-[240px] text-6xl">
+                        {formatNumber(Number(status.cycles) / 1e12, 2)} T
+                    </div>
+                ) : (
+                    <div className="flex animate-pulse flex-row items-center w-[240px] h-24 justify-center space-x-5">
+                        <div className="w-full h-full bg-gray-300 rounded-md "></div>
+                    </div>
+                )}
                 <div
                     className="text-right"
                     onClick={(e) => {
@@ -145,19 +155,30 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                                         )}
                                     </Menu.Item>
                                 </div>
-                                <div className="px-1 py-1">
-                                    <Menu.Item>
-                                        {({ active }) => (
-                                            <button
-                                                className={`${
-                                                    active
-                                                        ? "bg-blue-200 text-white"
-                                                        : "text-gray-900"
-                                                } group flex w-full items-center rounded-md px-6 py-6`}
-                                            ></button>
-                                        )}
-                                    </Menu.Item>
-                                </div>
+                                {console.log(status)}
+                                {status ? (
+                                    <div className="px-1 py-1">
+                                        <Menu.Item>
+                                            {({ active }) => (
+                                                <button
+                                                    className={`${
+                                                        active
+                                                            ? "bg-blue-200 text-white"
+                                                            : "text-gray-900"
+                                                    } group flex w-full items-center rounded-md px-6 py-6`}
+                                                >
+                                                    {Object.keys(
+                                                        status.status
+                                                    )[0] === "running"
+                                                        ? "Stop"
+                                                        : "Start"}
+                                                </button>
+                                            )}
+                                        </Menu.Item>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
                             </Menu.Items>
                         </Transition>
                     </Menu>

@@ -59,6 +59,7 @@ class Identity {
     //II
     async checkLogin() {
         const authClient = await AuthClient.create();
+        console.log("check", authClient);
         if (await authClient.isAuthenticated()) {
             this.authClient = authClient;
             return Promise.resolve(true);

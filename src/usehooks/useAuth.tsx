@@ -11,6 +11,7 @@ import { principalToAccountIdentifier } from "@/utils/common";
 import { CommonStore } from "@/store/common.store";
 // @ts-ignore
 import Storage, { walletKeyType } from "../utils/storage";
+import { connect } from "react-redux";
 export interface AuthContext {
     isAuthenticated: boolean;
     isAuthReady: boolean;
@@ -56,6 +57,7 @@ export const useProvideAuth = (authClient): Props => {
     }, [principal]);
     const checkII = async () => {
         const connected = await authClient.checkLogin();
+        console.log(connected);
         if (connected) {
             const identity = await authClient.getIdentity();
             _setIdentity(identity);

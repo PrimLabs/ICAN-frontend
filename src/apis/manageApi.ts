@@ -11,7 +11,7 @@ class Manage {
         const res = await (
             await this.getActor()
         ).canister_status({ canister_id: canisterId });
-        console.log(res);
+        return res;
     }
     async createCanister(
         freezing_threshold: number,

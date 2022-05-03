@@ -84,7 +84,7 @@ export const CreateModal = ({ bucket, open, setCreate }: Props) => {
     return (
         <div
             className={`fixed w-full h-full 
-            ${open ? `flex` : `hidden`} items-center justify-center`}
+            ${open ? `flex` : `hidden`} items-center justify-center z-50`}
         >
             <div
                 className="absolute w-full h-full bg-gray-900 opacity-25"

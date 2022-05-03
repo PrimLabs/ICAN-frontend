@@ -88,3 +88,22 @@ const toHexString = (byteArray) => {
         return ("0" + (byte & 0xff).toString(16)).slice(-2);
     }).join("");
 };
+
+export const formatNumber = (value, decimals) => {
+    if (value < 10) {
+        if (decimals) {
+            return value.toFixed(decimals);
+        } else {
+            return value.toFixed(1);
+        }
+    } else {
+        let st = value.toString().split(".")[0];
+        if (st.length < 4) return st;
+        if (st.length < 7) return `${st.substring(0, st.length - 3)}K`;
+        if (st.length < 10) return `${st.substring(0, st.length - 6)}M`;
+        if (st.length < 13) return `${st.substring(0, st.length - 9)}G`;
+        if (st.length < 13) return `${st.substring(0, st.length - 12)}T`;
+    }
+
+    return value;
+};
