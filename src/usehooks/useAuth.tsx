@@ -62,7 +62,7 @@ export const useProvideAuth = (authClient): Props => {
             const principal = await identity.getPrincipal();
             setPrincipal(principal);
             const subAccountId = principalToAccountIdentifier(principal, 0);
-            console.log(subAccountId);
+            console.log("login success");
             setSubAccountId(subAccountId);
             setAuthenticated(true);
             setWalletType("II");

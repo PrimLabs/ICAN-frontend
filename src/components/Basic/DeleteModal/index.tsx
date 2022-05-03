@@ -29,7 +29,7 @@ export const DeleteModal = ({ open, setDel, canisterId, hubId }: Props) => {
     return (
         <div
             className={`fixed top-0 left-0 w-full h-full 
-            ${open ? `flex` : `hidden`} items-center justify-center`}
+            ${open ? `flex` : `hidden`} items-center justify-center z-50`}
         >
             <div
                 className="absolute w-full h-full bg-gray-900 opacity-25"
