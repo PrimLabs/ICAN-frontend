@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Principal } from "@dfinity/principal";
 import { KitApi } from "@/apis/kitApi";
 import { ManageApi } from "@/apis/manageApi";
 import { useAuth } from "@/usehooks/useAuth";
 import { TopupModal, DeleteModal, InstallModal } from "@/components";
 import { useParams } from "react-router-dom";
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 
 interface Props {
     index: number;
@@ -12,6 +15,7 @@ interface Props {
     desc: string;
     canisterId: Principal;
 }
+
 export const Canister = ({ name, canisterId, index, desc }: Props) => {
     const { isAuth } = useAuth();
     const [topup, setTopup] = useState<number>(0);
@@ -57,42 +61,104 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                 <div className="flex items-center w-[120px] text-6xl">
                     {name}
                 </div>
-                <div className="flex items-center justify-center w-[120px] py-[10px] bg-green-400 rounded text-5xl font-medium text-white">
-                    active
+
+                <div
+                    className="text-right"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
+                    <Menu as="div" className="relative inline-block text-left">
+                        <div className="w-[200px]">
+                            <Menu.Button className="items-center inline-flex w-full h-24  justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-4xl font-medium text-white  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                                Options
+                                <ChevronDownIcon
+                                    className="ml-2 -mr-1 h-10 w-10 text-violet-200 hover:text-violet-100"
+                                    aria-hidden="true"
+                                />
+                            </Menu.Button>
+                        </div>
+                        <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                        >
+                            <Menu.Items className="absolute w-full text-5xl right-0 mt-2  origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div className="px-1 py-1 ">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <button
+                                                className={`${
+                                                    active
+                                                        ? "bg-blue-200 text-white"
+                                                        : "text-gray-900"
+                                                } group flex w-full items-center rounded-md px-6 py-6`}
+                                                onClick={() => {
+                                                    setInstall(true);
+                                                }}
+                                            >
+                                                Install
+                                            </button>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                                <div className="px-1 py-1">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <button
+                                                className={`${
+                                                    active
+                                                        ? "bg-blue-200 text-white"
+                                                        : "text-gray-900"
+                                                } group flex w-full items-center rounded-md px-6 py-6`}
+                                                onClick={() => {
+                                                    setTopup(1);
+                                                }}
+                                            >
+                                                Add cycles
+                                            </button>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                                <div className="px-1 py-">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <button
+                                                className={`${
+                                                    active
+                                                        ? "bg-blue-200 text-white"
+                                                        : "text-gray-900"
+                                                } group flex w-full items-center rounded-md px-6 py-6`}
+                                                onClick={() => {
+                                                    setDel(1);
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                                <div className="px-1 py-1">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <button
+                                                className={`${
+                                                    active
+                                                        ? "bg-blue-200 text-white"
+                                                        : "text-gray-900"
+                                                } group flex w-full items-center rounded-md px-6 py-6`}
+                                            ></button>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                            </Menu.Items>
+                        </Transition>
+                    </Menu>
                 </div>
-                <button
-                    className="bg-blue-400 w-[120px] py-[10px] font-medium rounded text-white text-5xl hover:bg-blue-300"
-                    onClick={(e) => {
-                        setInstall(true);
-                        e.stopPropagation();
-                    }}
-                >
-                    install
-                </button>
-                <button
-                    className="bg-blue-300 w-[120px] py-[10px] font-medium rounded text-white text-5xl hover:bg-blue-300"
-                    disabled
-                >
-                    stop
-                </button>
-                <button
-                    className="bg-blue-400 w-[120px] py-[10px] font-medium rounded text-white text-5xl hover:bg-blue-300"
-                    onClick={(e) => {
-                        setTopup(1);
-                        e.stopPropagation();
-                    }}
-                >
-                    top up
-                </button>
-                <button
-                    className="text-red-700 w-[120px] py-[10px] text-5xl font-medium hover:text-white border-[2px] border-red-700 hover:bg-red-600 focus:ring-4 focus:ring-red-300 rounded  text-center"
-                    onClick={(e) => {
-                        setDel(1);
-                        e.stopPropagation();
-                    }}
-                >
-                    delete
-                </button>
             </div>
             <div
                 className={`${
