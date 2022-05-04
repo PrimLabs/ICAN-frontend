@@ -27,7 +27,7 @@ class Identity {
     async login() {
         return new Promise<any>(async (resolve, reject) => {
             this.authClient.login({
-                maxTimeToLive: BigInt(86400_000_000_000),
+                maxTimeToLive: BigInt(86400_000_000_000 * 7),
                 identityProvider: this.url,
                 onSuccess: async (res) => {
                     this.identity = await this.authClient.getIdentity();
