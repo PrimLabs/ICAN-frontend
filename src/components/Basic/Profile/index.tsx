@@ -4,7 +4,7 @@ import { useAuth } from "@/usehooks/useAuth";
 import { LedgerApi } from "@/apis/ledgerApi";
 import { getToAccountIdentifier } from "@/utils/common";
 import { Principal } from "@dfinity/principal";
-export const Profile = () => {
+export const Profile = ({ open }: { open: boolean }) => {
     const { principal } = useAuth();
     const [balance, setBalance] = useState<number>(0);
     const [id, setId] = useState<any>();
@@ -25,7 +25,7 @@ export const Profile = () => {
     };
     useEffect(() => {
         principal && fetch();
-    }, [principal]);
+    }, [principal, open]);
 
     return (
         <div>

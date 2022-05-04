@@ -98,7 +98,7 @@ export default () => {
                 <Input
                     id="asdsdssd"
                     type="number"
-                    placeholder="minimum 0.3 icp"
+                    placeholder="minimum 0.4 icp"
                     onChange={(e) => {
                         setIcp(e.target.value);
                     }}
@@ -108,12 +108,12 @@ export default () => {
             <Gap height={20} />
             <button
                 className={`px-[40px] py-[10px] rounded-lg text-white text-4xl ${
-                    loading || !balance || balance < icp || Number(icp) < 0.3
+                    loading || !balance || balance < icp || Number(icp) < 0.4
                         ? "bg-blue-200"
                         : "bg-blue-500"
                 } hover:bg-blue-200`}
                 onClick={() => handleCreate()}
-                disabled={loading || !balance || balance < icp || icp < 0.3}
+                disabled={loading || !balance || balance < icp || icp < 0.4}
             >
                 Create
             </button>

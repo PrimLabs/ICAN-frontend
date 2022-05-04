@@ -32,7 +32,7 @@ export const SiderBar = () => {
     return (
         <>
             <ModalWrap open={profile} setOpen={setProfile}>
-                <Profile />
+                <Profile open={profile} />
             </ModalWrap>
             <div className="fixed h-full w-[120px]  top-1 rounded shadow-2xl bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-25 border border-gray-200 flex flex-col justify-start items-center ">
                 <Gap height={40} />
