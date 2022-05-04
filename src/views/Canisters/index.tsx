@@ -128,11 +128,16 @@ export const Canisters = () => {
                     </div>
                 </div>
                 <div className="flex items-center justify-between h-[40px] mb-[20px] px-[40px] ">
-                    {items.map((res) => (
-                        <div className="w-[120px] text-5xl font-medium">
-                            {res}
-                        </div>
-                    ))}
+                    <div className="w-[120px] text-5xl font-medium">name</div>
+                    <div className="w-[120px] text-5xl font-medium">status</div>
+                    <div className="w-[120px] text-5xl font-medium">cycles</div>
+                    <div className="w-[300px] text-5xl font-medium">
+                        Memory used
+                    </div>
+
+                    <div className="w-[200px] text-5xl font-medium">
+                        Options
+                    </div>
                 </div>
                 {list.map((res: any, index) => (
                     <>

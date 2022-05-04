@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { formatNumber } from "@/utils/common";
+import { formatNumber, toHexString } from "@/utils/common";
 import { width } from "@mui/system";
 
 interface Props {
@@ -87,11 +87,19 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                         </div>
                         <div className="w-[300px] bg-gray-200 rounded-full dark:bg-gray-700">
                             <div
-                                className="bg-blue-600 text-3xl font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                                style={{ width: "45%" }}
+                                className="bg-blue-400 text-3xl font-medium text-blue-100 text-center  leading-none rounded-full"
+                                style={{
+                                    width: `${Math.floor(
+                                        (Number(status.memory_size) /
+                                            4294967296) *
+                                            100
+                                    )}%`,
+                                }}
                             >
-                                {" "}
-                                45%
+                                {Math.floor(
+                                    (Number(status.memory_size) / 4294967296) *
+                                        100
+                                )}
                             </div>
                         </div>
                     </>
@@ -221,6 +229,14 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                 <div className="flex pb-10 text-4xl">
                     Canister id: {String(canisterId)}
                 </div>
+                {status ? (
+                    <div className="flex pb-10 text-4xl">
+                        Moudlue hash:{" "}
+                        {toHexString(new Uint8Array(status.module_hash[0]))}
+                    </div>
+                ) : (
+                    ""
+                )}
             </div>
         </>
     );

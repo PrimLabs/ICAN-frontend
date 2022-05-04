@@ -83,7 +83,7 @@ const to32bits = (num) => {
     new DataView(b).setUint32(0, num);
     return Array.from(new Uint8Array(b));
 };
-const toHexString = (byteArray) => {
+export const toHexString = (byteArray) => {
     return Array.from(byteArray, function (byte) {
         return ("0" + (byte & 0xff).toString(16)).slice(-2);
     }).join("");
