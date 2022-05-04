@@ -38,7 +38,7 @@ class Dkt {
                 console.log("create bucket", res);
                 console.log(res);
                 if (res.err)
-                    reject(Object.keys(res.err)[0] + `${res.err.toString}`);
+                    reject(Object.keys(res.err)[0] + `${res.err.toString()}`);
                 resolve(res);
             } catch (e) {
                 console.log(e);

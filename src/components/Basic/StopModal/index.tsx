@@ -32,7 +32,7 @@ export const StopModal = ({
             });
         else
             toast.promise(ManageApi.startCanister(canisterId), {
-                pending: "start canister ",
+                pending: "star canister ",
                 success: "success 🥳",
                 error: {
                     render({ data }) {

@@ -5,11 +5,14 @@ import { Gap, ModalWrap, Profile } from "@/components";
 import { useAuth } from "@/usehooks/useAuth";
 import Storage from "@/utils/storage";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "tailwindcss/tailwind.css";
+import { RootState } from "@/redux/store";
 
 export const SiderBar = () => {
     const [profile, setProfile] = React.useState<boolean>(false);
-    const [buckets, setBuckets] = React.useState<any>();
+    const [hubs, setHubs] = React.useState<any>();
+    const { buckets } = useSelector((state: RootState) => state);
     const history = useHistory();
     const {
         IILogIn,
@@ -27,8 +30,8 @@ export const SiderBar = () => {
         subAccountId: string;
     } = useAuth();
     useEffect(() => {
-        principal && setBuckets(Storage.getBucketsStorage(String(principal)));
-    }, [principal]);
+        principal && setHubs(Storage.getBucketsStorage(String(principal)));
+    }, [principal, buckets]);
     return (
         <>
             <ModalWrap open={profile} setOpen={setProfile}>
