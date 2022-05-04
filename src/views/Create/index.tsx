@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Canister } from "@/components";
-import { Gap, Input } from "@/components";
+import { Gap, Input, Skeleton } from "@/components";
 import { BucketApi } from "@/apis/bucketApi";
 import { Principal } from "@dfinity/principal";
 import { RadialProgress } from "react-daisyui";
@@ -16,7 +16,7 @@ import Storage from "@/utils/storage";
 export default () => {
     const [icp, setIcp] = useState(0);
     const [status, setStatus] = useState<any>();
-    const [balance, setBalance] = useState<any>();
+    const [balance, setBalance] = useState<any>(-1);
     const [loading, setLoading] = useState<boolean>(false);
     const {
         isAuth,
@@ -85,7 +85,10 @@ export default () => {
                 )}
             </div>
             <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
-                Your balance is: <span className="font-normal">{balance}</span>{" "}
+                Your balance is:{" "}
+                <span className="font-normal">
+                    {balance === -1 ? <Skeleton /> : balance}
+                </span>{" "}
                 ICP
             </div>
             <Gap height={50} />

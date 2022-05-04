@@ -18,7 +18,7 @@ export const AddCycles = ({
 }) => {
     const [toggle, setToggle] = useState(true);
     const [icp, setIcp] = useState<number>(0);
-    const [balance, setBalance] = useState<any>();
+    const [balance, setBalance] = useState<any>(0);
     const {
         isAuth,
         logOut,
@@ -93,12 +93,12 @@ export const AddCycles = ({
             <Gap height={20} />
             <button
                 className={`px-[40px] py-[10px] rounded-lg text-white text-4xl ${
-                    !balance || balance <= icp || icp >= 0.1
+                    !balance || balance <= icp || icp < 0.1
                         ? "bg-blue-200"
                         : "bg-blue-500"
                 } hover:bg-blue-200`}
                 onClick={() => handleClick()}
-                disabled={!balance || balance < icp || icp >= 0.1}
+                disabled={!balance || balance < icp || icp < 0.1}
             >
                 Add
             </button>

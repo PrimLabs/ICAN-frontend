@@ -9,3 +9,4 @@ export * from "./ModalWrap";
 export * from "./Profile";
 export * from "./InstallModal";
 export * from "./StopModal";
+export * from "./Skeleton";
