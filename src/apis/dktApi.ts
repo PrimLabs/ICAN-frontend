@@ -33,12 +33,11 @@ class Dkt {
     async createBucket(icp: number) {
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await (
-                    await this.getActor()
-                ).createBucket(icp * 1e8);
+                const res = await (await this.getActor()).createHub(icp * 1e8);
                 console.log("create bucket", res);
                 console.log(res);
-                // if (res.err) reject(Object.keys(res.err)[0]);
+                if (res.err)
+                    reject(Object.keys(res.err)[0] + `${res.err.toString}`);
                 resolve(res);
             } catch (e) {
                 console.log(e);

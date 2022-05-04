@@ -84,7 +84,7 @@ export const AddCycles = ({
             <Input
                 id="asdsdssdssd"
                 type="number"
-                placeholder=""
+                placeholder="min 0.1"
                 onChange={(e) => {
                     setIcp(e.target.value);
                 }}
@@ -93,10 +93,12 @@ export const AddCycles = ({
             <Gap height={20} />
             <button
                 className={`px-[40px] py-[10px] rounded-lg text-white text-4xl ${
-                    !balance || balance < icp ? "bg-blue-200" : "bg-blue-500"
+                    !balance || balance <= icp || icp >= 0.1
+                        ? "bg-blue-200"
+                        : "bg-blue-500"
                 } hover:bg-blue-200`}
                 onClick={() => handleClick()}
-                disabled={!balance || balance < icp}
+                disabled={!balance || balance < icp || icp >= 0.1}
             >
                 Add
             </button>
