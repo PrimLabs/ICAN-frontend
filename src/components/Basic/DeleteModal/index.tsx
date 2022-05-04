@@ -39,7 +39,7 @@ export const DeleteModal = ({ open, setDel, canisterId, hubId }: Props) => {
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
                         <p className="text-7xl font-medium">
-                            Are you sure to delete canister {open} ?
+                            Are you sure to delete this canister ?
                         </p>
                         <div
                             className="close-icon cursor-pointer z-50"

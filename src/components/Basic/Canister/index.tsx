@@ -9,6 +9,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { formatNumber } from "@/utils/common";
+import { width } from "@mui/system";
 
 interface Props {
     index: number;
@@ -64,11 +65,38 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                     {name}
                 </div>
                 {status ? (
-                    <div className="flex items-center w-[240px] text-6xl">
-                        {formatNumber(Number(status.cycles) / 1e12, 2)} T
-                    </div>
+                    <>
+                        {(() => {
+                            switch (Object.keys(status.status)[0]) {
+                                case "running":
+                                    return (
+                                        <span className="w-[120px]  text-center text-3xl font-semibold inline-block py-1 px-2  rounded-full text-green-600 bg-green-200 uppercase">
+                                            running
+                                        </span>
+                                    );
+                                case "stopped":
+                                    return (
+                                        <span className="w-[120px]  text-center text-3xl font-semibold inline-block py-1 px-2  rounded-full text-yellow-600 bg-yellow-200 uppercase">
+                                            stopped
+                                        </span>
+                                    );
+                            }
+                        })()}
+                        <div className="flex items-center w-[120px] text-4xl">
+                            {formatNumber(Number(status.cycles) / 1e12, 2)} T
+                        </div>
+                        <div className="w-[300px] bg-gray-200 rounded-full dark:bg-gray-700">
+                            <div
+                                className="bg-blue-600 text-3xl font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                                style={{ width: "45%" }}
+                            >
+                                {" "}
+                                45%
+                            </div>
+                        </div>
+                    </>
                 ) : (
-                    <div className="flex animate-pulse flex-row items-center w-[240px] h-24 justify-center space-x-5">
+                    <div className="flex animate-pulse flex-row items-center w-[500px] h-24 justify-center space-x-5">
                         <div className="w-full h-full bg-gray-300 rounded-md "></div>
                     </div>
                 )}
