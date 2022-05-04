@@ -10,6 +10,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { formatNumber, toHexString } from "@/utils/common";
 import { width } from "@mui/system";
+import { StopModal } from "..";
 
 interface Props {
     index: number;
@@ -23,6 +24,7 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
     const [topup, setTopup] = useState<number>(0);
     const [open, setOpen] = useState<boolean>(false);
     const [del, setDel] = useState<number>(0);
+    const [stop, setStop] = useState<number>(0);
     const [install, setInstall] = useState<boolean>(false);
     const [status, setStatus] = useState<any>();
     const { hubId }: { hubId: string } = useParams();
@@ -38,6 +40,17 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
     }, [isAuth]);
     return (
         <>
+            {status ? (
+                <StopModal
+                    open={stop}
+                    setDel={setStop}
+                    canisterId={canisterId}
+                    hubId={hubId}
+                    running={Object.keys(status.status)[0] === "running"}
+                />
+            ) : (
+                ""
+            )}
             <DeleteModal
                 open={del}
                 setDel={setDel}
@@ -202,6 +215,7 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                                                             ? "bg-blue-200 text-white"
                                                             : "text-gray-900"
                                                     } group flex w-full items-center rounded-md px-6 py-6`}
+                                                    onClick={() => setStop(1)}
                                                 >
                                                     {Object.keys(
                                                         status.status

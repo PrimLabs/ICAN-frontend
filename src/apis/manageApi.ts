@@ -56,14 +56,32 @@ class Manage {
         return await (await this.getActor()).addCycles(index, cycle * 1e12);
     }
     async startCanister(canisterId: Principal): Promise<any> {
-        const res = await (await this.getActor()).startCanister(canisterId);
-        console.log(res);
-        return res;
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await (
+                    await this.getActor()
+                ).start_canister({ canister_id: canisterId });
+                console.log(res);
+                resolve(res);
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            }
+        });
     }
     async stopCanister(canisterId: Principal): Promise<any> {
-        const res = await (await this.getActor()).stopCanister(canisterId);
-        console.log(res);
-        return res;
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await (
+                    await this.getActor()
+                ).stop_canister({ canister_id: canisterId });
+                console.log("stop", res);
+                resolve(res);
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            }
+        });
     }
     async deleteCanister(canisterId: Principal): Promise<any> {
         const res = await (await this.getActor()).stop_and_delete(canisterId);
