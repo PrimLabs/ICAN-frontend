@@ -30,6 +30,7 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
     const { hubId }: { hubId: string } = useParams();
     const fetch = async () => {
         console.time("status");
+        setStatus(undefined);
         const res = await ManageApi.getCanisterStatus(canisterId);
         setStatus(res);
         console.timeEnd("status");
@@ -42,6 +43,7 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
         <>
             {status ? (
                 <StopModal
+                    setStatus={setStatus}
                     open={stop}
                     setDel={setStop}
                     canisterId={canisterId}
@@ -63,6 +65,7 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
                 canisterId={canisterId}
             />
             <TopupModal
+                setStatus={setStatus}
                 open={topup}
                 setTopup={setTopup}
                 canisterId={canisterId}

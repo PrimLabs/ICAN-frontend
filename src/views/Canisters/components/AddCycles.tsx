@@ -11,10 +11,12 @@ import { LedgerApi } from "@/apis/ledgerApi";
 import { Gap } from "@/components";
 
 export const AddCycles = ({
+    open,
     setOpen,
     hubId,
     setStatus,
 }: {
+    open: boolean;
     setOpen: Function;
     hubId: string;
     setStatus: Function;
@@ -68,7 +70,7 @@ export const AddCycles = ({
                 setBalance(Number(res.e8s) / 1e8);
             })();
         }
-    }, [principal]);
+    }, [principal,open]);
     return (
         <div className="flex flex-col justify-center">
             <div className="flex justify-between items-center pb-[20px]">

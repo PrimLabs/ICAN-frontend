@@ -10,6 +10,7 @@ interface Props {
     setDel: Function;
     canisterId: Principal;
     running: boolean;
+    setStatus: Function;
     hubId: string;
 }
 export const StopModal = ({
@@ -18,12 +19,21 @@ export const StopModal = ({
     canisterId,
     hubId,
     running,
+    setStatus,
 }: Props) => {
     const handleClick = async () => {
         if (running)
             toast.promise(ManageApi.stopCanister(canisterId), {
                 pending: "stopping canister ",
-                success: "success 🥳",
+                success:  {
+                render(){
+                    (async() =>{ setStatus(undefined);
+                        const res = await ManageApi.getCanisterStatus(canisterId);
+                        setStatus(res);
+                    })();
+                    return `success !`;
+                }
+            },
                 error: {
                     render({ data }) {
                         return `🤯 ${data}`;
@@ -33,7 +43,15 @@ export const StopModal = ({
         else
             toast.promise(ManageApi.startCanister(canisterId), {
                 pending: "star canister ",
-                success: "success 🥳",
+                success:  {
+                render(){
+                    (async() =>{ setStatus(undefined);
+                        const res = await ManageApi.getCanisterStatus(canisterId);
+                        setStatus(res);
+                    })();
+                    return `success !`;
+                }
+            },
                 error: {
                     render({ data }) {
                         return `🤯 ${data}`;

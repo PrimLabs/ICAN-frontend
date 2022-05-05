@@ -5,20 +5,30 @@ import { Input } from "@/components";
 import { Principal } from "@dfinity/principal";
 import { toast } from "react-toastify";
 import Storage from "@/utils/storage";
+import {ManageApi} from "@/apis/manageApi"
 interface Props {
     open: number;
     setTopup: Function;
     canisterId: Principal;
+    setStatus: Function;
     hubId: string;
 }
-export const TopupModal = ({ open, setTopup, canisterId, hubId }: Props) => {
+export const TopupModal = ({ open, setTopup, canisterId, hubId,setStatus }: Props) => {
     const [toggle, setToggle] = useState(true);
     const [val, setVal] = useState<number>(1);
 
     const handleClick = async () => {
         toast.promise(BucketApi(hubId).depositCycles(canisterId, val), {
             pending: "top up canister 😄",
-            success: "success 🥳",
+            success: {
+                render(){
+                (async() =>{ setStatus(undefined);
+                        const res = await ManageApi.getCanisterStatus(canisterId);
+                        setStatus(res);
+                    })();
+                    return `success !`;
+                }
+            },
             error: {
                 render({ data }) {
                     return `🤯 ${data}`;
@@ -41,7 +51,7 @@ export const TopupModal = ({ open, setTopup, canisterId, hubId }: Props) => {
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
                         <p className="text-7xl font-medium">
-                            Top up cycles to canister {open}
+                            Top up cycles to canister
                         </p>
 
                         <div

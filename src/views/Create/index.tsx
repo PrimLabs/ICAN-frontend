@@ -72,7 +72,7 @@ export default () => {
                 Create your Manage hub
             </div>
             <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
-                Mange hub is a Canister owned by your Internet Identity.
+                Manage hub is a Canister owned by your Internet Identity.
             </div>
 
             <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
