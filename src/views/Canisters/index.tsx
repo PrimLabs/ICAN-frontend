@@ -149,6 +149,7 @@ export const Canisters = () => {
                                 desc={res.description}
                                 index={index}
                                 canisterId={res.canister_id}
+                                setList={setList}
                             />
                         </div>
                         <Gap height={30} />

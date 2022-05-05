@@ -17,9 +17,10 @@ interface Props {
     name: string;
     desc: string;
     canisterId: Principal;
+    setList: Function;
 }
 
-export const Canister = ({ name, canisterId, index, desc }: Props) => {
+export const Canister = ({ name, canisterId, index, desc ,setList}: Props) => {
     const { isAuth } = useAuth();
     const [topup, setTopup] = useState<number>(0);
     const [open, setOpen] = useState<boolean>(false);
@@ -55,6 +56,7 @@ export const Canister = ({ name, canisterId, index, desc }: Props) => {
             )}
             <DeleteModal
                 open={del}
+                setList={setList}
                 setDel={setDel}
                 canisterId={canisterId}
                 hubId={hubId}

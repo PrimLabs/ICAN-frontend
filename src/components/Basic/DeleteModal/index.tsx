@@ -10,8 +10,9 @@ interface Props {
     setDel: Function;
     canisterId: Principal;
     hubId: string;
+    setList: Function;
 }
-export const DeleteModal = ({ open, setDel, canisterId, hubId }: Props) => {
+export const DeleteModal = ({ open, setDel, canisterId, hubId,setList }: Props) => {
     const handleClick = async () => {
         toast.promise(BucketApi(hubId).delCanister(canisterId, hubId), {
             pending: "deleting canister ",
