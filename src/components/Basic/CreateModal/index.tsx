@@ -11,8 +11,9 @@ interface Props {
     bucket: string;
     open: boolean;
     setCreate: Function;
+    setList: Function;
 }
-export const CreateModal = ({ bucket, open, setCreate }: Props) => {
+export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
     const { principal } = useAuth();
     const [toggle, setToggle] = useState(true);
     const [file, setFile] = useState<string>("");
@@ -66,7 +67,10 @@ export const CreateModal = ({ bucket, open, setCreate }: Props) => {
                     pending: "creating canister 😄",
                     success: {
                         render() {
-                            console.log("bullshit");
+                            (async () => {
+                                const res = await BucketApi(bucket).getCanisters();
+                                if (res.ok) setList(res.ok);
+                            })();
                             return `success !`;
                         },
                     },
@@ -276,7 +280,7 @@ export const CreateModal = ({ bucket, open, setCreate }: Props) => {
                             Action
                         </button> */}
                         <button
-                            className="bg-indigo-500 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-indigo-400"
+                            className="bg-blue-400 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-blue-400"
                             onClick={() => handleClick()}
                         >
                             Create

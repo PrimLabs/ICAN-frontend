@@ -155,7 +155,7 @@ export const Canisters = () => {
                     </>
                 ))}
             </div>
-            <CreateModal open={create} setCreate={setCreate} bucket={hubId} />
+            <CreateModal open={create} setCreate={setCreate} bucket={hubId} setList={setList}/>
             <ModalWrap setOpen={setAddCycles} open={addCycles}>
                 <AddCycles setOpen={setAddCycles} hubId={hubId} setStatus={setStatus} open={addCycles}/>
             </ModalWrap>

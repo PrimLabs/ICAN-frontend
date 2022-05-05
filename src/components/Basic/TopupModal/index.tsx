@@ -16,7 +16,6 @@ interface Props {
 export const TopupModal = ({ open, setTopup, canisterId, hubId,setStatus }: Props) => {
     const [toggle, setToggle] = useState(true);
     const [val, setVal] = useState<number>(1);
-
     const handleClick = async () => {
         toast.promise(BucketApi(hubId).depositCycles(canisterId, val), {
             pending: "Adding cycles to canister 😄",
@@ -92,7 +91,7 @@ export const TopupModal = ({ open, setTopup, canisterId, hubId,setStatus }: Prop
                             Action
                         </button> */}
                         <button
-                            className="bg-blue-400 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-indigo-400"
+                            className="bg-blue-400 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-blue-300"
                             onClick={() => handleClick()}
                         >
                             Add
