@@ -19,7 +19,7 @@ export const TopupModal = ({ open, setTopup, canisterId, hubId,setStatus }: Prop
 
     const handleClick = async () => {
         toast.promise(BucketApi(hubId).depositCycles(canisterId, val), {
-            pending: "top up canister 😄",
+            pending: "Adding cycles to canister 😄",
             success: {
                 render(){
                 (async() =>{ setStatus(undefined);
@@ -51,7 +51,7 @@ export const TopupModal = ({ open, setTopup, canisterId, hubId,setStatus }: Prop
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
                         <p className="text-7xl font-medium">
-                            Top up cycles to canister
+                            Add cycles to canister
                         </p>
 
                         <div
@@ -92,7 +92,7 @@ export const TopupModal = ({ open, setTopup, canisterId, hubId,setStatus }: Prop
                             Action
                         </button> */}
                         <button
-                            className="bg-indigo-500 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-indigo-400"
+                            className="bg-blue-400 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-indigo-400"
                             onClick={() => handleClick()}
                         >
                             Add
