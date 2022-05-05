@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Storage from "@/utils/storage";
 import { Principal } from "@dfinity/principal";
 import { useAuth } from "@/usehooks/useAuth";
+import { BucketApi } from "@/apis/bucketApi";
 import { getToAccountIdentifier } from "@/utils/common";
 import { LedgerApi } from "@/apis/ledgerApi";
 import { Gap } from "@/components";
@@ -12,9 +13,11 @@ import { Gap } from "@/components";
 export const AddCycles = ({
     setOpen,
     hubId,
+    setStatus,
 }: {
     setOpen: Function;
     hubId: string;
+    setStatus: Function;
 }) => {
     const [toggle, setToggle] = useState(true);
     const [icp, setIcp] = useState<number>(0);
@@ -35,7 +38,15 @@ export const AddCycles = ({
     const handleClick = async () => {
         toast.promise(DktApi.tranformIcp(Principal.fromText(hubId), icp), {
             pending: "Adding cycles 😄",
-            success: "success 🥳",
+            success:  {
+                render() {
+                    (async() =>{
+                        const res = await BucketApi(hubId).getStatus();
+                        setStatus(res.ok);
+                    })();
+                    return `success !`;
+                },
+            },
             error: {
                 render({ data }) {
                     return `🤯 ${data}`;

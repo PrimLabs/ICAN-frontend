@@ -90,15 +90,13 @@ export default () => {
             </div>
             <Gap height={50} />
             <div className="text-5xl  text-wrap font-light pb-12 w-[800px]">
-                Convert icp to cycles to create a manage hub. We will charge 0.2
-                icp to keep ICAN running,The rest will be added to your mange
-                hub
+                Convert icp to cycles to create a manage hub. 
             </div>
             <div className="w-[260px]">
                 <Input
                     id="asdsdssd"
                     type="number"
-                    placeholder="minimum 0.4 icp"
+                    placeholder="minimum 0.2 icp"
                     onChange={(e) => {
                         setIcp(e.target.value);
                     }}

@@ -67,6 +67,7 @@
         "lodash": "^4.17.21",
         "lottie-web": "^5.7.8",
         "module-alias": "^2.2.2",
+        "patch-package": "^6.4.7",
         "qrcode.react": "^1.0.1",
         "rc-slider": "^9.7.4",
         "react": "^17.0.2",

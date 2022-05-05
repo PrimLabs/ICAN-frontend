@@ -81,7 +81,7 @@ function generateWebpackConfigForCanister(name, info) {
         },
         devServer: {
             historyApiFallback: true,
-            port: 3000,
+            port: 3001,
             proxy: {
                 "/api": {
                     target: "https://ic0.app",
