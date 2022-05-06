@@ -11,6 +11,7 @@ import {
     Gap,
 } from "@/components";
 import Icon from "@/icons/Icon";
+import MainPage from "./MainPage";
 import { DktApi } from "@/apis/dktApi";
 import { LedgerApi } from "@/apis/ledgerApi";
 import { Principal } from "@dfinity/principal";
@@ -40,6 +41,7 @@ export default () => {
             <SiderBar />
             {principal ? (
                 <Switch>
+                    <Route exact path="/" render={() => <MainPage />} />
                     <Route exact path="/createhub" render={() => <Create />} />
                     <Route
                         exact
