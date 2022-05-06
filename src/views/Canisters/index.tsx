@@ -25,8 +25,7 @@ export const Canisters = () => {
     const [addCycles, setAddCycles] = useState<boolean>(false);
     const [balance, setBalance] = useState<any>();
     const [create, setCreate] = useState<boolean>(false);
-    const { hubId }: { hubId: string } = useParams();
-    console.log(hubId, "dafdsfasf");
+    const { hubId, name }: { hubId: string; name: string } = useParams();
     const {
         isAuth,
         logOut,
@@ -59,13 +58,20 @@ export const Canisters = () => {
         <>
             <div className=" flex flex-col pl-[200px] pr-[80px] py-[80px] w-full ">
                 <div className="flex align-center text-8xl font-medium pb-[40px]">
-                    Manage Your Canister
+                    Manage Hub {name}
                 </div>
                 <div className="flex align-center text-5xl font-medium pb-[40px]">
                     Hub Status
                 </div>
                 <div className="flex items-center pb-[40px]">
-                    <div className="flex flex-col w-[300px] h-[200px] bg-slate-100 rounded p-8">
+                    <div
+                        className="flex flex-col w-[200px] h-[200px] bg-slate-100 rounded p-8 items-center justify-center hover:shadow-lg cursor-pointer"
+                        onClick={() => setCreate(true)}
+                    >
+                        <Icon name="add" width="72" height="72" />
+                    </div>
+                    <Gap width={40} />
+                    <div className="flex flex-col w-[200px] h-[200px] bg-slate-100 rounded p-8">
                         <div className="flex justify-between items-center h-[33px]">
                             <div className="flex align-center text-4xl font-medium ">
                                 Memory used
@@ -118,13 +124,6 @@ export const Canisters = () => {
                                 : "0"}{" "}
                             $
                         </div>
-                    </div>
-                    <Gap width={40} />
-                    <div
-                        className="flex flex-col w-[200px] h-[200px] bg-slate-100 rounded p-8 items-center justify-center hover:shadow-lg cursor-pointer"
-                        onClick={() => setCreate(true)}
-                    >
-                        <Icon name="add" width="72" height="72" />
                     </div>
                 </div>
                 <div className="flex items-center justify-between h-[40px] mb-[20px] px-[40px] ">

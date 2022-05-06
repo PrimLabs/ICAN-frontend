@@ -43,7 +43,7 @@ export default () => {
                     <Route exact path="/createhub" render={() => <Create />} />
                     <Route
                         exact
-                        path="/hub/:hubId"
+                        path="/hub/:name/:hubId"
                         render={() => <Canisters />}
                     />
                 </Switch>

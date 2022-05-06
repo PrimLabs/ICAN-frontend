@@ -19,11 +19,12 @@ class Dkt {
     }
     async getBucket() {
         const res = await (await this.getActor()).getHub();
+        console.log(res);
         updateBuckets(res);
         const tmp = [];
         res.map((v) => {
             //@ts-ignore
-            tmp.push(String(v));
+            tmp.push([v[0], String(v[1])]);
         });
         console.log(tmp);
         const principal = String((await this.getIdentity()).getPrincipal());

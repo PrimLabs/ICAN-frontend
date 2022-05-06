@@ -111,7 +111,7 @@ export default () => {
                 </div>
                 <Input
                     id="asdsdssd"
-                    placeholder="abc"
+                    placeholder="maximum 8 characters"
                     onChange={(e) => {
                         setName(e.target.value);
                     }}
@@ -136,12 +136,22 @@ export default () => {
             <Gap height={20} />
             <button
                 className={`px-[40px] py-[10px] rounded-lg text-white text-4xl ${
-                    loading || !balance || balance < icp || Number(icp) < 0.2
+                    loading ||
+                    !balance ||
+                    balance < icp ||
+                    Number(icp) < 0.2 ||
+                    name.length > 8
                         ? "bg-blue-200"
                         : "bg-blue-500"
                 } hover:bg-blue-200`}
                 onClick={() => handleCreate()}
-                disabled={loading || !balance || balance < icp || icp < 0.2}
+                disabled={
+                    loading ||
+                    !balance ||
+                    balance < icp ||
+                    icp < 0.2 ||
+                    name.length > 8
+                }
             >
                 Create
             </button>

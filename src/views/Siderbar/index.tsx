@@ -32,6 +32,7 @@ export const SiderBar = () => {
     } = useAuth();
     useEffect(() => {
         principal && setHubs(Storage.getBucketsStorage(String(principal)));
+        principal && console.log(Storage.getBucketsStorage(String(principal)));
     }, [principal, buckets]);
     return (
         <>
@@ -93,15 +94,30 @@ export const SiderBar = () => {
                 {isAuth &&
                     buckets.map((v, k) => {
                         return (
-                            <div
-                                key={k}
-                                className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-                                onClick={() => {
-                                    history.push(`/hub/${v}`);
-                                }}
-                            >
-                                <Icon name="station" />
-                            </div>
+                            <>
+                                <div
+                                    data-tooltip-target={"tooltip-hub" + v[0]}
+                                    data-tooltip-placement="right"
+                                    key={k}
+                                    className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
+                                    onClick={() => {
+                                        history.push(`/hub/${v[0]}/${v[1]}`);
+                                    }}
+                                >
+                                    <Icon name="station" />
+                                </div>
+                                <div
+                                    id={"tooltip-hub" + v[0]}
+                                    role="tooltip"
+                                    className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                                >
+                                    hub {v[0]}
+                                    <div
+                                        className="tooltip-arrow"
+                                        data-popper-arrow
+                                    ></div>
+                                </div>
+                            </>
                         );
                     })}
             </div>

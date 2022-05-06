@@ -25,15 +25,18 @@ export const StopModal = ({
         if (running)
             toast.promise(ManageApi.stopCanister(canisterId), {
                 pending: "stopping canister ",
-                success:  {
-                render(){
-                    (async() =>{ setStatus(undefined);
-                        const res = await ManageApi.getCanisterStatus(canisterId);
-                        setStatus(res);
-                    })();
-                    return `success !`;
-                }
-            },
+                success: {
+                    render() {
+                        (async () => {
+                            setStatus(undefined);
+                            const res = await ManageApi.getCanisterStatus(
+                                canisterId
+                            );
+                            setStatus(res);
+                        })();
+                        return `success !`;
+                    },
+                },
                 error: {
                     render({ data }) {
                         return `🤯 ${data}`;
@@ -43,15 +46,18 @@ export const StopModal = ({
         else
             toast.promise(ManageApi.startCanister(canisterId), {
                 pending: "star canister ",
-                success:  {
-                render(){
-                    (async() =>{ setStatus(undefined);
-                        const res = await ManageApi.getCanisterStatus(canisterId);
-                        setStatus(res);
-                    })();
-                    return `success !`;
-                }
-            },
+                success: {
+                    render() {
+                        (async () => {
+                            setStatus(undefined);
+                            const res = await ManageApi.getCanisterStatus(
+                                canisterId
+                            );
+                            setStatus(res);
+                        })();
+                        return `success !`;
+                    },
+                },
                 error: {
                     render({ data }) {
                         return `🤯 ${data}`;
