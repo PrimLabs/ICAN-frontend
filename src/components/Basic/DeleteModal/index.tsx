@@ -12,7 +12,13 @@ interface Props {
     hubId: string;
     setList: Function;
 }
-export const DeleteModal = ({ open, setDel, canisterId, hubId,setList }: Props) => {
+export const DeleteModal = ({
+    open,
+    setDel,
+    canisterId,
+    hubId,
+    setList,
+}: Props) => {
     const handleClick = async () => {
         toast.promise(BucketApi(hubId).delCanister(canisterId, hubId), {
             pending: "deleting canister ",
@@ -39,7 +45,7 @@ export const DeleteModal = ({ open, setDel, canisterId, hubId,setList }: Props) 
             <div className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px]  p-[20px] rounded shadow-lg z-50 overflow-y-auto">
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
-                        <p className="text-7xl font-medium">
+                        <p className="text-5xl font-medium">
                             Are you sure to delete this canister ?
                         </p>
                         <div
