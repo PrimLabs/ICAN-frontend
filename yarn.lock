@@ -826,7 +826,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
-"@popperjs/core@^2.4.4":
+"@popperjs/core@^2.4.4", "@popperjs/core@^2.9.3":
   "integrity" "sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA=="
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.2.tgz"
   "version" "2.11.2"
@@ -2968,6 +2968,14 @@
   dependencies:
     "micromatch" "^4.0.2"
 
+"flowbite@^1.4.5":
+  "integrity" "sha512-6Y5tGBUM+qP/KzehtJ4s+CO+4stQo7dMIozAzuc+x724uDmEM8/ti/KbyxykADTiyBCJd++dNJj3fa0EpxmRvQ=="
+  "resolved" "https://registry.npmjs.org/flowbite/-/flowbite-1.4.5.tgz"
+  "version" "1.4.5"
+  dependencies:
+    "@popperjs/core" "^2.9.3"
+    "mini-svg-data-uri" "^1.4.3"
+
 "follow-redirects@^1.0.0", "follow-redirects@^1.14.0":
   "integrity" "sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz"
@@ -4202,6 +4210,11 @@
   dependencies:
     "@babel/runtime" "^7.12.1"
     "tiny-warning" "^1.0.3"
+
+"mini-svg-data-uri@^1.4.3":
+  "integrity" "sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg=="
+  "resolved" "https://registry.npmjs.org/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz"
+  "version" "1.4.4"
 
 "minimalistic-assert@^1.0.0", "minimalistic-assert@^1.0.1":
   "integrity" "sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A=="

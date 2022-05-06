@@ -62,7 +62,7 @@ export const Canisters = () => {
                     Manage Your Canister
                 </div>
                 <div className="flex align-center text-5xl font-medium pb-[40px]">
-                    Station Status
+                    Hub Status
                 </div>
                 <div className="flex items-center pb-[40px]">
                     <div className="flex flex-col w-[300px] h-[200px] bg-slate-100 rounded p-8">
@@ -128,9 +128,9 @@ export const Canisters = () => {
                     </div>
                 </div>
                 <div className="flex items-center justify-between h-[40px] mb-[20px] px-[40px] ">
-                    <div className="w-[120px] text-5xl font-medium">name</div>
-                    <div className="w-[120px] text-5xl font-medium">status</div>
-                    <div className="w-[120px] text-5xl font-medium">cycles</div>
+                    <div className="w-[120px] text-5xl font-medium">Name</div>
+                    <div className="w-[120px] text-5xl font-medium">Status</div>
+                    <div className="w-[120px] text-5xl font-medium">Cycles</div>
                     <div className="w-[300px] text-5xl font-medium">
                         Memory used
                     </div>
@@ -156,9 +156,19 @@ export const Canisters = () => {
                     </>
                 ))}
             </div>
-            <CreateModal open={create} setCreate={setCreate} bucket={hubId} setList={setList}/>
+            <CreateModal
+                open={create}
+                setCreate={setCreate}
+                bucket={hubId}
+                setList={setList}
+            />
             <ModalWrap setOpen={setAddCycles} open={addCycles}>
-                <AddCycles setOpen={setAddCycles} hubId={hubId} setStatus={setStatus} open={addCycles}/>
+                <AddCycles
+                    setOpen={setAddCycles}
+                    hubId={hubId}
+                    setStatus={setStatus}
+                    open={addCycles}
+                />
             </ModalWrap>
         </>
     );

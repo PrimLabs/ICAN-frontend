@@ -87,7 +87,7 @@ export const InstallModal = ({ open, setOpen, canisterId }: Props) => {
             <div className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px]  p-[20px] rounded shadow-lg z-50 overflow-y-auto">
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
-                        <p className="text-7xl font-medium">Install Canister</p>
+                        <p className="text-5xl font-medium">Install Canister</p>
 
                         <div
                             className="close-icon cursor-pointer z-50"
@@ -106,7 +106,7 @@ export const InstallModal = ({ open, setOpen, canisterId }: Props) => {
                     </div>
 
                     <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                        wasm file
+                        Wasm File
                     </label>
                     {file ? (
                         <div className="flex w-full items-center justify-between">
@@ -168,9 +168,9 @@ export const InstallModal = ({ open, setOpen, canisterId }: Props) => {
                                     setMode(Number(e.target.value));
                                 }}
                             >
-                                <option value="1">install</option>
-                                <option value="2">reinstall</option>
-                                <option value="3">upgrade</option>
+                                <option value="1">Install</option>
+                                <option value="2">Reinstall</option>
+                                <option value="3">Upgrade</option>
                             </select>
                         </div>
                     </div>
@@ -179,10 +179,10 @@ export const InstallModal = ({ open, setOpen, canisterId }: Props) => {
                             Action
                         </button> */}
                         <button
-                            className="bg-indigo-500 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-indigo-400"
+                            className="bg-blue-400 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-blue-300"
                             onClick={() => handleClick()}
                         >
-                            install
+                            Install
                         </button>
                     </div>
                 </div>

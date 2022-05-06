@@ -18,6 +18,7 @@ export default () => {
     const [status, setStatus] = useState<any>();
     const [balance, setBalance] = useState<any>();
     const [loading, setLoading] = useState<boolean>(false);
+    const [name, setName] = useState<string>("");
     const {
         isAuth,
         logOut,
@@ -34,7 +35,7 @@ export default () => {
     const handleCreate = () => {
         console.log(icp);
         setLoading(true);
-        toast.promise(DktApi.createBucket(icp), {
+        toast.promise(DktApi.createBucket(name, icp), {
             pending: "creating Manage Hub",
             success: {
                 render() {
@@ -42,7 +43,9 @@ export default () => {
                     (async () => {
                         const res = await LedgerApi.account_balance(
                             getToAccountIdentifier(
-                                Principal.fromText("5hssk-kiaaa-aaaag-aaeva-cai"),
+                                Principal.fromText(
+                                    "5hssk-kiaaa-aaaag-aaeva-cai"
+                                ),
                                 principal
                             )
                         );
@@ -78,14 +81,14 @@ export default () => {
         <div className="flex flex-col w-full h-screen items-center justify-center">
             <div className=" text-8xl font-medium pb-[60px]">
                 {" "}
-                Create your Manage hub
+                Create your Manage Hub
             </div>
             <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
-                Manage hub is a Canister owned by your Internet Identity.
+                Manage Hub is a Canister owned by your Internet Identity.
             </div>
 
             <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
-                Please transfer some ICP to your address fisrt:
+                Please transfer some ICP to your address first:
             </div>
             <div className="text-5xl text-wrap pb-6 w-[800px]">
                 {getToAccountIdentifier(
@@ -99,9 +102,27 @@ export default () => {
             </div>
             <Gap height={50} />
             <div className="text-5xl  text-wrap font-light pb-12 w-[800px]">
-                Convert icp to cycles to create a manage hub. 
+                Convert ICP to cycles to create a manage hub.
             </div>
+
             <div className="w-[260px]">
+                <div className="text-4xl  text-wrap font-light pb-2 ">
+                    Hub name
+                </div>
+                <Input
+                    id="asdsdssd"
+                    placeholder="abc"
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                    value={name}
+                />
+            </div>
+            <Gap height={20} />
+            <div className="w-[260px]">
+                <div className="text-4xl  text-wrap font-light pb-2">
+                    ICP amout:
+                </div>
                 <Input
                     id="asdsdssd"
                     type="number"

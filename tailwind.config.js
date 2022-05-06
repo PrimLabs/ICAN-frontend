@@ -22,5 +22,6 @@ module.exports = {
             blur: "blur(20px)",
         },
     },
-    plugins: [require("daisyui")],
+    plugins: [require("flowbite/plugin")],
+    // plugins: [require("daisyui")],
 };

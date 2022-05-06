@@ -49,7 +49,7 @@ export default () => {
                 </Switch>
             ) : (
                 <div className="flex flex-col w-full h-screen items-center justify-center text-12xl">
-                    <div className="text-8xl">Please Login first</div>
+                    <div className="text-8xl">Please login first</div>
                     <Gap height={30} />
                     <div
                         className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"

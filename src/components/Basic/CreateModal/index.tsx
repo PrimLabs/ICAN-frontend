@@ -13,7 +13,7 @@ interface Props {
     setCreate: Function;
     setList: Function;
 }
-export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
+export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
     const { principal } = useAuth();
     const [toggle, setToggle] = useState(true);
     const [file, setFile] = useState<string>("");
@@ -68,7 +68,9 @@ export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
                     success: {
                         render() {
                             (async () => {
-                                const res = await BucketApi(bucket).getCanisters();
+                                const res = await BucketApi(
+                                    bucket
+                                ).getCanisters();
                                 if (res.ok) setList(res.ok);
                             })();
                             return `success !`;
@@ -97,7 +99,7 @@ export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
             <div className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px]  p-[20px] rounded shadow-lg z-50 overflow-y-auto">
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
-                        <p className="text-7xl font-medium">Create Canister</p>
+                        <p className="text-5xl font-medium">Create Canister</p>
 
                         <div
                             className="close-icon cursor-pointer z-50"
@@ -136,7 +138,7 @@ export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
                         </div>
                         <div>
                             <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                                Canister Description(optional)
+                                Canister Description (optional)
                             </label>
                             <Input
                                 id="desc"
@@ -152,7 +154,7 @@ export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
                         </div>
                         <div>
                             <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                                init cycles balance (T)
+                                Init Cycles Balance (T)
                             </label>
                             <Input
                                 id="cycles"
@@ -167,7 +169,7 @@ export const CreateModal = ({ bucket, open, setCreate,setList }: Props) => {
                             />
                         </div>
                         <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                            wasm file
+                            Wasm File
                         </label>
                         {file ? (
                             <div className="flex w-full items-center justify-between">
