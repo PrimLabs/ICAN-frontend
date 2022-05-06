@@ -102,7 +102,7 @@ export default () => {
             </div>
             <Gap height={50} />
             <div className="text-5xl  text-wrap font-light pb-12 w-[800px]">
-                Convert ICP to cycles to create a manage hub.
+                Convert ICP to cycles to create a manage hub. (It takes 20-30s)
             </div>
 
             <div className="w-[260px]">
