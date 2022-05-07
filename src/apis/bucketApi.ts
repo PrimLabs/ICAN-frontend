@@ -45,9 +45,9 @@ class Bucket {
         compute_allocation: number,
         name: string,
         description: string,
-        wasm: Array<any>,
         amount: number,
-        principal: Principal
+        principal: Principal,
+        wasm?: Array<any>
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {

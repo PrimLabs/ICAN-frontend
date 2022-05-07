@@ -17,7 +17,7 @@ export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
     const { principal } = useAuth();
     const [toggle, setToggle] = useState(true);
     const [file, setFile] = useState<string>("");
-    const [data, setData] = useState<Array<number>>([]);
+    const [data, setData] = useState<Array<number>>();
     const [val, setVal] = useState<any>({
         name: "",
         desc: "",
@@ -59,9 +59,9 @@ export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
                     val.compute,
                     val.name,
                     val.desc,
-                    data,
                     val.init,
-                    principal
+                    principal,
+                    data
                 ),
                 {
                     pending: "creating canister 😄",
