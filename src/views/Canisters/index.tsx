@@ -65,13 +65,13 @@ export const Canisters = () => {
         </div>
         <div className="flex items-center pb-[40px]">
           <div
-            className="flex flex-col w-[200px] h-[200px] bg-slate-100 rounded p-8 items-center justify-center hover:shadow-lg cursor-pointer"
+            className="flex flex-col w-96 h-96 bg-slate-100 rounded p-8 items-center justify-center hover:shadow-lg cursor-pointer"
             onClick={() => setCreate(true)}
           >
             <Icon name="add" width="72" height="72" />
           </div>
           <Gap width={40} />
-          <div className="flex flex-col w-[200px] h-[200px] bg-slate-100 rounded p-8">
+          <div className="flex flex-col w-96 h-96 bg-slate-100 rounded p-8">
             <div className="flex justify-between items-center h-[33px]">
               <div className="flex align-center text-4xl font-medium ">
                 Memory used
@@ -95,7 +95,7 @@ export const Canisters = () => {
             </div>
           </div>
           <Gap width={40} />
-          <div className="flex flex-col w-[600px] h-[200px] bg-slate-100 rounded p-8">
+          <div className="flex flex-col w-fit h-96 bg-slate-100 rounded p-8">
             <div className="flex justify-between items-center h-[33px]">
               <div className="flex align-center text-4xl font-medium">
                 Cycles balance
@@ -108,7 +108,7 @@ export const Canisters = () => {
               </button>
             </div>
             <Gap height={30} />
-            <div className="flex w-full justify-center items-center text-6xl font-medium pb-3">
+            <div className="flex w-full justify-center items-center text-6xl font-medium pb-3 px-44">
               {status ? Number(status.cycle_balance) / 1e12 : "0"} T
             </div>
             <div className="flex w-full justify-center items-center text-4xl ">
