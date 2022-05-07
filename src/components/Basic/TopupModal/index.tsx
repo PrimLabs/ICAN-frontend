@@ -83,7 +83,7 @@ export const TopupModal = ({
                     >
                         <div>
                             <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                                amount (unit T)
+                                amount (T)
                             </label>
                             <Input
                                 id="name"

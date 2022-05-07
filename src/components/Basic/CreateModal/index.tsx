@@ -169,7 +169,7 @@ export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
                             />
                         </div>
                         <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                            Wasm File
+                            Wasm File (optional)
                         </label>
                         {file ? (
                             <div className="flex w-full items-center justify-between">
