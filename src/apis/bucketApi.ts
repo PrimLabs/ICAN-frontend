@@ -82,12 +82,12 @@ class Bucket {
             }
         });
     }
-    async delCanister(canisterId: Principal, to: string): Promise<any> {
+    async delCanister(canisterId: Principal): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await (
                     await this.getActor()
-                ).delCanister(canisterId, [Principal.fromText(to)]);
+                ).delCanister(canisterId);
 
                 resolve(res);
             } catch (e) {

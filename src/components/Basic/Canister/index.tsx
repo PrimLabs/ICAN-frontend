@@ -19,9 +19,10 @@ interface Props {
     desc: string;
     canisterId: Principal;
     setList: Function;
+    setSuperStatus: Function;
 }
 
-export const Canister = ({ name, canisterId, index, desc, setList }: Props) => {
+export const Canister = ({ name, canisterId, index, desc, setList ,setSuperStatus}: Props) => {
     const { isAuth } = useAuth();
     const [topup, setTopup] = useState<number>(0);
     const [open, setOpen] = useState<boolean>(false);
@@ -61,6 +62,7 @@ export const Canister = ({ name, canisterId, index, desc, setList }: Props) => {
                 setDel={setDel}
                 canisterId={canisterId}
                 hubId={hubId}
+                setSuperStatus={setSuperStatus}
             />
             <InstallModal
                 open={install}

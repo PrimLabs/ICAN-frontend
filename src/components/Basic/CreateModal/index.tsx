@@ -12,8 +12,9 @@ interface Props {
     open: boolean;
     setCreate: Function;
     setList: Function;
+    setStatus: Function;
 }
-export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
+export const CreateModal = ({ bucket, open, setCreate, setList ,setStatus}: Props) => {
     const { principal } = useAuth();
     const [toggle, setToggle] = useState(true);
     const [file, setFile] = useState<string>("");
@@ -72,6 +73,12 @@ export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
                                     bucket
                                 ).getCanisters();
                                 if (res.ok) setList(res.ok);
+                            })();
+                             (async () => {
+                                const res = await BucketApi(
+                                    bucket
+                                ).getStatus();
+                                if (res.ok) setStatus(res.ok);
                             })();
                             return `success !`;
                         },
