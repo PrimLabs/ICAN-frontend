@@ -11,7 +11,8 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { formatNumber, toHexString } from "@/utils/common";
 import { width } from "@mui/system";
 import { StopModal } from "..";
-
+import Icon from "@/icons/Icon";
+import { Gap } from "../Gap";
 interface Props {
     index: number;
     name: string;
@@ -20,7 +21,7 @@ interface Props {
     setList: Function;
 }
 
-export const Canister = ({ name, canisterId, index, desc ,setList}: Props) => {
+export const Canister = ({ name, canisterId, index, desc, setList }: Props) => {
     const { isAuth } = useAuth();
     const [topup, setTopup] = useState<number>(0);
     const [open, setOpen] = useState<boolean>(false);
@@ -244,8 +245,24 @@ export const Canister = ({ name, canisterId, index, desc ,setList}: Props) => {
                     open ? "flex" : "hidden"
                 } w-full flex-col bg-slate-50 rounded-b px-[40px] py-12`}
             >
-                <div className="flex pb-10 text-4xl">Description: {desc}</div>
-                <div className="flex pb-10 text-4xl">
+                <div className="flex justify-between pb-10 text-4xl">
+                    <div>Description: {desc} </div>{" "}
+                    <div
+                        className="flex items-center underline cursor-pointer"
+                        onClick={() => {
+                            window.open(
+                                `https://test.icscan.io/canister/${String(
+                                    canisterId
+                                )}`,
+                                "_blank"
+                            );
+                        }}
+                    >
+                        view on icscan <Gap width={2} />
+                        <Icon name="link" />
+                    </div>
+                </div>
+                <div className="flex pb-10 text-4xl ">
                     Canister id: {String(canisterId)}
                 </div>
                 {status ? (

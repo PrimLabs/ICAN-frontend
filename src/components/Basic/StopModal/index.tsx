@@ -80,7 +80,7 @@ export const StopModal = ({
             <div className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px]  p-[20px] rounded shadow-lg z-50 overflow-y-auto">
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
-                        <p className="text-7xl font-medium">
+                        <p className="text-5xl font-medium">
                             {`Are you sure to ${
                                 running ? "stop" : "start"
                             } this canister ?`}

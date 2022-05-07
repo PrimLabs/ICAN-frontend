@@ -40,9 +40,9 @@ export const AddCycles = ({
     const handleClick = async () => {
         toast.promise(DktApi.tranformIcp(Principal.fromText(hubId), icp), {
             pending: "Adding cycles 😄",
-            success:  {
+            success: {
                 render() {
-                    (async() =>{
+                    (async () => {
                         const res = await BucketApi(hubId).getStatus();
                         setStatus(res.ok);
                     })();
@@ -70,11 +70,11 @@ export const AddCycles = ({
                 setBalance(Number(res.e8s) / 1e8);
             })();
         }
-    }, [principal,open]);
+    }, [principal, open]);
     return (
         <div className="flex flex-col justify-center">
             <div className="flex justify-between items-center pb-[20px]">
-                <p className="text-7xl font-medium">Add cycles to Manage Hub</p>
+                <p className="text-5xl font-medium">Add cycles to Manage Hub</p>
                 <div
                     className="close-icon cursor-pointer z-50"
                     onClick={() => setOpen(0)}

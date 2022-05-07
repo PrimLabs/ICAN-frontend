@@ -56,7 +56,7 @@ class Bucket {
                 ).deployCanister({
                     preserve_wasm: false,
                     name: name,
-                    wasm: wasm,
+                    wasm: wasm ? [wasm] : [],
                     description: description,
                     cycle_amount: amount * 1e12,
                     settings: [

@@ -88,7 +88,7 @@ export default () => {
             </div>
 
             <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
-                Please transfer some ICP to your address first:
+                Please transfer some ICP to this address first:
             </div>
             <div className="text-5xl text-wrap pb-6 w-[800px]">
                 {getToAccountIdentifier(

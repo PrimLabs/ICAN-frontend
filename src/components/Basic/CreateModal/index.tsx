@@ -194,7 +194,6 @@ export const CreateModal = ({ bucket, open, setCreate, setList }: Props) => {
                                 <input
                                     id="wasm"
                                     type="file"
-                                    multiple
                                     className="cursor-pointer absolute opacity-0 w-full h-full p-20 z-50"
                                     onChange={(e) => handleFile(e)}
                                 />
