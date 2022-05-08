@@ -106,7 +106,6 @@ export const CreateModal = ({
       className={`fixed w-full h-full 
             ${open ? `flex` : `hidden`} items-center justify-center z-50`}
     >
-      {console.log(val)}
       <div
         className="absolute w-full h-full bg-gray-900 opacity-25"
         onClick={() => setCreate(false)}

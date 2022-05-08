@@ -22,6 +22,7 @@ export const Canisters = () => {
   const [list, setList] = useState([]);
   const [icp, setIcp] = useState(0);
   const [status, setStatus] = useState<any>();
+  const [version, setVersion] = useState<string>("");
   const [addCycles, setAddCycles] = useState<boolean>(false);
   const [balance, setBalance] = useState<any>();
   const [create, setCreate] = useState<boolean>(false);
@@ -50,6 +51,10 @@ export const Canisters = () => {
         (async () => {
           const res = await BucketApi(hubId).getStatus();
           setStatus(res.ok);
+        })();
+        (async () => {
+          const res = await BucketApi(hubId).getVersion();
+          setVersion(res.ok);
         })();
       }
     }
@@ -112,7 +117,7 @@ export const Canisters = () => {
               {status ? Number(status.cycle_balance) / 1e12 : "0"} T
             </div>
             <div className="flex w-full justify-center items-center text-4xl ">
-              {status ? (Number(status.cycle_balance) / 1e12) * 1.36 : "0"} $
+              $ {status ? (Number(status.cycle_balance) / 1e12) * 1.36 : "0"}
             </div>
           </div>
         </div>
