@@ -1,7 +1,7 @@
 import { width } from "@mui/system";
 import "./Icon.css";
 
-export type Name = "add"|"login"|"account"|"file"|"station"|"spin"|"discord"|"twitter"|"github"|"document"|"link";
+export type Name = "add"|"login"|"account"|"file"|"station"|"spin"|"discord"|"twitter"|"github"|"document"|"link"|"refresh";
 
 interface Props {
     name: Name;
@@ -9,9 +9,10 @@ interface Props {
     color?: string;
     width?:string;
     height?:string;
+    spin?: boolean
 }
 
-const Icon = ({ name, bg, color, width, height }: Props) => {
+const Icon = ({ name, bg, color, width, height,spin }: Props) => {
     switch (name) {
         case "add":
             return (
@@ -56,7 +57,10 @@ const Icon = ({ name, bg, color, width, height }: Props) => {
                     <path d="m487.6,90.6l-66.2-66.2c-9.3-10.5-39.1-24.2-64.6,0l-115.1,115.2c-17.8,17.8-17.8,46.8 0,64.6l19.2,19.2-37.5,37.6-19.2-19.2c-8.6-8.6-35.7-25.1-64.6,0l-115.2,115.1c-17.8,17.8-17.8,46.8-7.10543e-15,64.6l66.2,66.2c22.7,22.7 52.4,12.1 64.6,0l115.2-115.2c17.8-17.8 17.8-46.8 0-64.6l-19.2-19.2 37.6-37.6 19.2,19.2c27.7,23.8 53.5,11 64.6,0l115.2-115.2c17.6-17.7 17.6-46.7-0.2-64.5zm-245,245c2.5,2.5 2.5,6.6 0,9.1l-115.2,115.2c-2.5,2.5-6.3,2.9-9.1,0l-66.2-66.2c-2.5-2.5-2.5-6.6 0-9.1l115.2-115.2c3.1-3.1 7.1-2 9.1,0l19.2,19.2-32.5,32.5c-7.7,7.7-7.7,20.1 0,27.7 3.8,3.8 17.3,10.4 27.7,0l32.5-32.5 19.3,19.3zm217.3-208.1l-115.2,115.1c-2.5,2.5-6.3,2.9-9.1,0l-19.2-19.2 32.5-32.5c7.7-7.7 7.7-20.1 0-27.7-7.7-7.7-20.1-7.7-27.7,0l-32.5,32.5-19.2-19.2c-2.5-2.5-2.5-6.6 0-9.1l115.1-115.2c3.1-3.1 7.1-2.1 9.1,0l66.2,66.2c2.5,2.5 2.5,6.6-5.68434e-14,9.1z"/>
                 </g>
                 </svg>
-
+        case "refresh":
+            return <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${spin ? "animate-spin" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /> 
+            </svg>
         default:
             return null;
     }

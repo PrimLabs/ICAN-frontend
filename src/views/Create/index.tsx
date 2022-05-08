@@ -18,6 +18,7 @@ export default () => {
   const [status, setStatus] = useState<any>();
   const [balance, setBalance] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [refresh, setRefresh] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const {
     isAuth,
@@ -41,12 +42,14 @@ export default () => {
         render() {
           DktApi.getBucket();
           (async () => {
+            setRefresh(true);
             const res = await LedgerApi.account_balance(
               getToAccountIdentifier(
                 Principal.fromText("5hssk-kiaaa-aaaag-aaeva-cai"),
                 principal
               )
             );
+            setRefresh(false);
             setBalance(Number(res.e8s) / 1e8);
           })();
           setLoading(false);
@@ -61,15 +64,32 @@ export default () => {
       },
     });
   };
-  useEffect(() => {
+  const handleRefresh = () => {
     if (principal) {
       (async () => {
+        setRefresh(true);
         const res = await LedgerApi.account_balance(
           getToAccountIdentifier(
             Principal.fromText("5hssk-kiaaa-aaaag-aaeva-cai"),
             principal
           )
         );
+        setRefresh(false);
+        setBalance(Number(res.e8s) / 1e8);
+      })();
+    }
+  };
+  useEffect(() => {
+    if (principal) {
+      (async () => {
+        setRefresh(true);
+        const res = await LedgerApi.account_balance(
+          getToAccountIdentifier(
+            Principal.fromText("5hssk-kiaaa-aaaag-aaeva-cai"),
+            principal
+          )
+        );
+        setRefresh(false);
         setBalance(Number(res.e8s) / 1e8);
       })();
     }
@@ -94,8 +114,15 @@ export default () => {
           principal
         )}
       </div>
-      <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
-        Your balance is: <span className="font-normal">{balance}</span> ICP
+      <div className="flex items-center text-5xl text-wrap font-light pb-6 w-[800px]">
+        Your balance is: <span className="font-normal">{balance}</span> ICP{" "}
+        <Gap width={6} />
+        <div
+          className="transform rotate-180 flex items-center justify-center w-14 h-14 rounded border-2 border-slate-200 hover:shadow-md cursor-pointer"
+          onClick={() => handleRefresh()}
+        >
+          <Icon name="refresh" spin={refresh} />
+        </div>
       </div>
       <Gap height={50} />
       <div className="text-5xl  text-wrap font-light pb-12 w-[800px]">

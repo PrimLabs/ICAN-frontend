@@ -121,7 +121,6 @@ export const Canisters = () => {
           <div className="w-[120px] text-5xl font-medium">Status</div>
           <div className="w-[120px] text-5xl font-medium">Cycles</div>
           <div className="w-[300px] text-5xl font-medium">Memory used</div>
-
           <div className="w-[200px] text-5xl font-medium">Options</div>
         </div>
         {list.map((res: any, index) => (
@@ -129,7 +128,7 @@ export const Canisters = () => {
             <div>
               {/* @ts-ignore */}
               <Canister
-                key={index}
+                key={String(res.canister_id)}
                 name={res.name}
                 desc={res.description}
                 index={index}
