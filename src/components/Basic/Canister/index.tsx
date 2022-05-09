@@ -254,7 +254,7 @@ export const Canister = ({
         </div>
         {status ? (
           <div className="flex pb-10 text-4xl">
-            Moudlue hash: {toHexString(new Uint8Array(status.module_hash[0]))}
+            Module hash: {toHexString(new Uint8Array(status.module_hash[0]))}
           </div>
         ) : (
           ""
