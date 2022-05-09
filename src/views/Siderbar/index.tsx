@@ -43,14 +43,22 @@ export const SiderBar = () => {
       <div className="fixed h-full w-[120px]  top-1 rounded shadow-2xl bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-25 border border-gray-200 flex flex-col justify-start items-center ">
         <Gap height={40} />
         <div
-          data-tooltip-target="tooltip-profile"
-          data-tooltip-placement="right"
+          id="tooltip-home"
+          role="tooltip"
           className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
           onClick={() => {
             history.push("/");
           }}
         >
           <Icon name="home" />
+        </div>
+        <div
+          id="tooltip-home"
+          role="tooltip"
+          className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          home
+          <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
         {isAuth ? (
           <>
@@ -104,7 +112,7 @@ export const SiderBar = () => {
             return (
               <>
                 <div
-                  data-tooltip-target={"tooltip-hub" + v[0]}
+                  data-tooltip-target={"tooltip-hub"}
                   data-tooltip-placement="right"
                   key={k}
                   className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
@@ -114,17 +122,17 @@ export const SiderBar = () => {
                 >
                   <Icon name="station" />
                 </div>
-                <div
-                  id={"tooltip-hub" + v[0]}
-                  role="tooltip"
-                  className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  hub {v[0]}
-                  <div className="tooltip-arrow" data-popper-arrow></div>
-                </div>
               </>
             );
           })}
+        <div
+          id={"tooltip-hub"}
+          role="tooltip"
+          className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          hub
+          <div className="tooltip-arrow" data-popper-arrow></div>
+        </div>
       </div>
     </>
   );

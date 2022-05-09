@@ -174,7 +174,7 @@ export const CreateModal = ({
               <Input
                 id="cycles"
                 type="number"
-                error={true}
+                error={val.init < 0.2}
                 onChange={(e) => {
                   const data = JSON.parse(JSON.stringify(val));
                   data["init"] = e.target.value;

@@ -67,6 +67,7 @@ class Bucket {
               compute_allocation: [compute_allocation],
             },
           ],
+          deploy_arguments: [],
         });
         if (res.err) reject(Object.keys(res.err)[0]);
         console.log("deploy", res);

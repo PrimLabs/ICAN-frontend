@@ -21,7 +21,7 @@ export const Input = ({
     <input
       id={id}
       className={`bg-gray-50 border-2 border-gray-300 text-gray-900 text-3xl rounded-lg ${
-        error ? "ring-red-100" : "focus-visible: outline-none"
+        error ? "border-red-100" : "focus-visible: outline-none"
       } focus:ring-blue-100 focus:border-blue-100 block w-full p-2.5`}
       placeholder={placeholder}
       onChange={(e) => onChange(e)}
