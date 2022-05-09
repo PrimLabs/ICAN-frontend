@@ -27,6 +27,7 @@ export const Input = ({
       onChange={(e) => onChange(e)}
       required={required}
       type={type}
+      min={"0"}
       // value={value}
     />
   );

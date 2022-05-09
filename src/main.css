@@ -8,9 +8,10 @@ main {
     padding: 0;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     height: 100%;
 }
+
 body,
 button,
 input,
@@ -78,6 +79,7 @@ a {
 * {
     box-sizing: border-box;
 }
+
 .Layout {
     width: 100%;
     min-height: 100vh;
