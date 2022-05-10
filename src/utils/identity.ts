@@ -7,7 +7,7 @@ import { AES, enc } from "crypto-js";
 import store from "../redux/store";
 import { JsonnableEd25519KeyIdentity } from "@dfinity/identity/lib/cjs/identity/ed25519";
 import { AuthClient } from "@dfinity/auth-client";
-import { II } from "../redux/features/dfinityIdentity";
+import { II } from "@/redux/features/dfinityIdentity";
 import storage from "./storage";
 export const addSubAccountFromDfinityIdentity = (
     principal: string,

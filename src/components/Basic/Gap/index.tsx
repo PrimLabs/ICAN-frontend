@@ -4,5 +4,5 @@ interface Props {
     height?: number;
 }
 export const Gap = ({ width, height }: Props) => {
-    return <div style={{ width: `${width}px`, height: `${height}px` }}></div>;
+    return <div style={{ width: `${width}px`, height: `${height}px` }}/>;
 };
