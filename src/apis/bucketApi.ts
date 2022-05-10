@@ -38,7 +38,7 @@ class Bucket {
                     await this.getActor()
                 ).depositCycles(canisterId, amount * 1e12);
                 console.log("deposit cycles", res);
-                if (res.err) reject(Object.keys(res.err)[0]);
+                if (Object.keys[0] === "err") reject(Object.keys(res.err)[0]);
                 resolve(res);
             } catch (e) {
                 reject(e);
@@ -76,7 +76,7 @@ class Bucket {
                     ],
                     deploy_arguments: [],
                 });
-                if (res.err) reject(Object.keys(res.err)[0]);
+                if (Object.keys[0] === "err") reject(Object.keys(res.err)[0]);
                 console.log("deploy", res);
                 resolve(res);
             } catch (e) {
@@ -135,6 +135,37 @@ class Bucket {
                 reject(e);
             }
         });
+    }
+
+    async updateCanisterSettings(
+        canisterId: Principal,
+        freezing_threshold: number,
+        memory_allocation: number,
+        compute_allocation: number,
+        controllers: Array<Principal>): Promise<any> {
+        console.log(controllers)
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await (await this.getActor()).updateCanisterSettings(
+                    {
+                        canister_id: canisterId,
+                        settings: {
+                            freezing_threshold: [freezing_threshold],
+                            controllers: [[...controllers]],
+                            memory_allocation: [memory_allocation],
+                            compute_allocation: [compute_allocation],
+                        },
+                    }
+                )
+                if (Object.keys[0] === "err") reject(Object.keys(res.err)[0]);
+                console.log(res);
+                resolve(res);
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            }
+        });
+
     }
 }
 

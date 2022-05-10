@@ -148,11 +148,13 @@ export const Canisters = () => {
                 ))}
             </div>
             <CreateModal
+                isUpdate={false}
                 open={create}
                 setCreate={setCreate}
                 bucket={hubId}
                 setList={setList}
                 setStatus={setStatus}
+                controllers={[]}
             />
             <ModalWrap setOpen={setAddCycles} open={addCycles}>
                 <AddCycles

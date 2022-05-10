@@ -3,7 +3,7 @@ import {Principal} from "@dfinity/principal";
 import {KitApi} from "@/apis/kitApi";
 import {ManageApi} from "@/apis/manageApi";
 import {useAuth} from "@/usehooks/useAuth";
-import {TopupModal, DeleteModal, InstallModal} from "@/components";
+import {TopupModal, DeleteModal, InstallModal, CreateModal} from "@/components";
 import {useParams} from "react-router-dom";
 import {Menu, Transition} from "@headlessui/react";
 import {Fragment, useEffect, useRef, useState} from "react";
@@ -23,19 +23,13 @@ interface Props {
     setSuperStatus: Function;
 }
 
-export const Canister = ({
-                             name,
-                             canisterId,
-                             index,
-                             desc,
-                             setList,
-                             setSuperStatus,
-                         }: Props) => {
-    const {isAuth} = useAuth();
+export const Canister = ({name, canisterId, index, desc, setList, setSuperStatus,}: Props) => {
+    const {isAuth, principal} = useAuth();
     const [topup, setTopup] = useState<number>(0);
     const [open, setOpen] = useState<boolean>(false);
     const [del, setDel] = useState<number>(0);
     const [stop, setStop] = useState<number>(0);
+    const [update, setUpdate] = useState<boolean>(false)
     const [install, setInstall] = useState<boolean>(false);
     const [status, setStatus] = useState<any>();
     const {hubId}: { hubId: string } = useParams();
@@ -62,6 +56,19 @@ export const Canister = ({
                     canisterId={canisterId}
                     hubId={hubId}
                     running={Object.keys(status.status)[0] === "running"}
+                />
+            ) : (
+                ""
+            )}
+            {status ? (
+                <CreateModal
+                    isUpdate={true}
+                    open={update}
+                    setCreate={setUpdate}
+                    bucket={String(canisterId)}
+                    setList={setList}
+                    setStatus={setStatus}
+                    controllers={status.settings.controllers.filter(e => String(e) !== hubId && String(e) !== String(principal))}
                 />
             ) : (
                 ""
@@ -194,6 +201,20 @@ export const Canister = ({
                                         )}
                                     </Menu.Item>
                                 </div>
+                                {status ? (
+                                    <div className="px-1 py-1">
+                                        <Menu.Item>
+                                            {({active}) => (
+                                                <button
+                                                    className={`${
+                                                        active ? "bg-blue-200 text-white" : "text-gray-900"
+                                                    } group flex w-full items-center rounded-md px-6 py-6`}
+                                                    onClick={() => setUpdate(true)}>
+                                                    Update
+                                                </button>
+                                            )}
+                                        </Menu.Item>
+                                    </div>) : null}
                                 <div className="px-1 py-">
                                     <Menu.Item>
                                         {({active}) => (
