@@ -7,7 +7,7 @@ import {Principal} from "@dfinity/principal";
 import Icon from "@/icons/Icon";
 
 export const Profile = ({open}: { open: boolean }) => {
-    const {principal, logOut}: any = useAuth();
+    const {principal, logOut}: { principal: Principal, logOut: Function } = useAuth();
     const [balance, setBalance] = useState<number>(0);
     const [id, setId] = useState<any>();
     const [refresh, setRefresh] = useState<boolean>(false);
@@ -58,6 +58,10 @@ export const Profile = ({open}: { open: boolean }) => {
             <div className="text-5xl font-medium">Your address</div>
             <Gap height={30}/>
             <div className="text-3xl font-normal overflow-wrap: break-all">{id}</div>
+            <Gap height={30}/>
+            <div className="text-5xl font-medium">Your principal</div>
+            <Gap height={30}/>
+            <div className="text-3xl font-normal overflow-wrap: break-all">{String(principal)}</div>
             <Gap height={30}/>
             <div className="flex items-center text-5xl font-medium">
                 Balance <Gap width={6}/>
