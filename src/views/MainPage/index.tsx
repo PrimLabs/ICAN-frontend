@@ -1,12 +1,13 @@
 import Icon from "@/icons/Icon";
-import React from "react";
+import React, { useState } from "react";
 import { Gap } from "@/components";
 import { useAuth } from "@/usehooks/useAuth";
-
+import copy from "copy-to-clipboard";
 //@ts-ignore
 import iCan from "../../public/assets/1.jpg";
 export default () => {
   const { isAuth, IILogIn }: any = useAuth();
+  const [copied, setCopy] = useState(false);
   return (
     <div className="flex flex-col w-full items-center justify-center">
       <img src={iCan} height="200" width="400" />
@@ -15,13 +16,27 @@ export default () => {
           data-tooltip-target="tooltip-twitter"
           data-tooltip-placement="top"
           className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8"
+          onClick={() => {
+            window.open(`https://twitter.com/iCAN_DAPP`, "_blank");
+          }}
         >
           <Icon name="twitter" />
+        </div>
+        <div
+          id="tooltip-twitter"
+          role="tooltip"
+          className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          twitter
+          <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
         <div
           data-tooltip-target="tooltip-github"
           data-tooltip-placement="top"
           className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8"
+          onClick={() => {
+            window.open(`https://github.com/PrimLabs/iCAN-Interface`, "_blank");
+          }}
         >
           <Icon name="github" />
         </div>
@@ -34,25 +49,45 @@ export default () => {
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
         <div
-          id="tooltip-twitter"
+          data-tooltip-target="tooltip-document"
+          data-tooltip-placement="top"
+          onClick={() => {
+            window.open(`https://2609367266.gitbook.io/ican/`, "_blank");
+          }}
+          className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8"
+        >
+          <Icon name="document" />
+        </div>
+        <div
+          id="tooltip-document"
           role="tooltip"
           className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
         >
-          twitter
+          document
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
-        <div className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8">
-          <Icon name="discord" />
+        <div
+          data-tooltip-target="tooltip-mail"
+          data-tooltip-placement="top"
+          onClick={() => {
+            copy("team@icantool.app");
+            setCopy(true);
+            setTimeout(() => setCopy(false), 1000);
+          }}
+          className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8"
+        >
+          <Icon name="mail" />
         </div>
-        <div className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8">
-          <Icon name="document" />
+        <div
+          id="tooltip-mail"
+          role="tooltip"
+          className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          mail {copied ? "copied" : ""}
+          <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
-
-        {/* <Gap height={30} />
-                <div className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8">
-                    <Icon name="twitter" />
-                </div> */}
       </div>
+      <Gap height={30} />
       {isAuth ? (
         ""
       ) : (
