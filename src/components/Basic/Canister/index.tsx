@@ -13,6 +13,7 @@ import {width} from "@mui/system";
 import {StopModal} from "..";
 import Icon from "@/icons/Icon";
 import {Gap} from "../Gap";
+import UpdateModal from "@/components/Basic/UpdateModal";
 
 interface Props {
     index: number;
@@ -61,12 +62,10 @@ export const Canister = ({name, canisterId, index, desc, setList, setSuperStatus
                 ""
             )}
             {status ? (
-                <CreateModal
-                    isUpdate={true}
+                <UpdateModal
                     open={update}
-                    setCreate={setUpdate}
+                    setOpen={setUpdate}
                     bucket={String(canisterId)}
-                    setList={setList}
                     setStatus={setStatus}
                     controllers={status.settings.controllers.filter(e => String(e) !== hubId && String(e) !== String(principal))}
                 />

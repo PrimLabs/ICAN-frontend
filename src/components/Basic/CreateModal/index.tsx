@@ -10,7 +10,6 @@ import {toast} from "react-toastify";
 import {useParams} from "react-router-dom";
 
 interface Props {
-    isUpdate: boolean,
     bucket: string;
     open: boolean;
     setCreate: Function;
@@ -19,9 +18,9 @@ interface Props {
     controllers: Array<string>
 }
 
-export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpdate, controllers}: Props) => {
+export const CreateModal = ({bucket, open, setCreate, setList, setStatus, controllers}: Props) => {
     const {principal}: { principal: Principal } = useAuth();
-    const [toggle, setToggle] = useState(!isUpdate);
+    const [toggle, setToggle] = useState(false);
     const [file, setFile] = useState<string>("");
     const [data, setData] = useState<Array<number>>();
     const {hubId}: { hubId: string } = useParams();
@@ -70,7 +69,7 @@ export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpda
 
     const result = () => {
         return {
-            pending: isUpdate ? "updating" : "creating canister 😄",
+            pending: "creating canister 😄",
             success: {
                 render() {
                     (async () => {
@@ -112,33 +111,6 @@ export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpda
         }
     };
 
-    const updateSettings = () => {
-        const controllers = standardControllers()
-        toast.promise(BucketApi(hubId).updateCanisterSettings(
-                Principal.fromText(bucket),
-                val.freezing,
-                val.memory,
-                val.compute,
-                controllers
-            ), {
-                pending: "updating",
-                success: {
-                    render() {
-                        (async () => {
-                            const res = await ManageApi.getCanisterStatus(Principal.from(bucket));
-                            setStatus(res);
-                        })();
-                        return `success !`;
-                    },
-                },
-                error: {
-                    render({data}) {
-                        return `🤯 ${data}`;
-                    },
-                },
-            }
-        ).then()
-    }
 
     const checkOk = (): boolean => {
         console.log(val.init);
@@ -169,10 +141,10 @@ export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpda
                 onClick={() => setCreate(false)}
             />
             <div
-                className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px] h-[700px] p-[20px] rounded shadow-lg z-50 overflow-y-scroll">
+                className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px] h-[700px] p-[20px] rounded shadow-lg z-50 overflow-y-scroll noBar">
                 <div className="modal-content py-4 text-left px-6">
                     <div className="flex justify-between items-center pb-[20px]">
-                        <p className="text-5xl font-medium">{isUpdate ? "Update Settings" : "Create Canister"}</p>
+                        <p className="text-5xl font-medium"> Create Canister</p>
 
                         <div
                             className="close-icon cursor-pointer z-50"
@@ -193,7 +165,7 @@ export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpda
                     <form
                         action="#"
                     >
-                        <div className={isUpdate ? "hidden" : "px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"}>
+                        <div className={"px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"}>
                             <div>
                                 <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
                                     Canister Name
@@ -355,7 +327,7 @@ export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpda
                                 <div>
                                     <label
                                         className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                                        {isUpdate ? "Change" : "Init"} Controllers
+                                        Init Controllers
                                     </label>
                                     {val.controllers.map((v, index) => {
                                         return (
@@ -394,10 +366,10 @@ export const CreateModal = ({bucket, open, setCreate, setList, setStatus, isUpda
                             className={` px-[40px] py-[10px] rounded-lg text-white text-4xl ${
                                 val.init < 0.2 ? "bg-blue-300" : "bg-blue-400"
                             }  hover:bg-blue-300`}
-                            onClick={() => isUpdate ? updateSettings() : handleClick()}
-                            disabled={isUpdate ? false : val.init < 0.2}
+                            onClick={() => handleClick()}
+                            disabled={val.init < 0.2}
                         >
-                            {isUpdate ? "Update" : "Create"}
+                            Create
                         </button>
                     </div>
                 </div>

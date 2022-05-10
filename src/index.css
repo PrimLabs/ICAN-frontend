@@ -1,0 +1,9 @@
+.noBar::-webkit-scrollbar {
+    display: none;
+
+}
+
+.noBar {
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}

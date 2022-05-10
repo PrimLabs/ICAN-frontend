@@ -48,6 +48,7 @@
         "@mui/material": "^5.0.6",
         "@reduxjs/toolkit": "^1.5.1",
         "@types/lodash": "^4.14.172",
+        "antd": "^4.20.3",
         "axios": "^0.21.1",
         "bignumber.js": "^9.0.1",
         "bip39": "^3.0.4",
