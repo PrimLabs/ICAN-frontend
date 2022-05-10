@@ -53,6 +53,7 @@
         "bip39": "^3.0.4",
         "bip39wordlist": "^0.0.4",
         "classnames": "^2.3.1",
+        "copy-to-clipboard": "^3.3.1",
         "crc-32": "^1.2.0",
         "croppie": "^2.6.5",
         "crypto-js": "^4.0.0",
