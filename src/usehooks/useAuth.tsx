@@ -5,22 +5,25 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { authClient } from "@/utils/getAgent/identity";
-import { Identity } from "@dfinity/agent";
-import { principalToAccountIdentifier } from "@/utils/common";
-import { CommonStore } from "@/store/common.store";
+import {authClient} from "@/utils/getAgent/identity";
+import {Identity} from "@dfinity/agent";
+import {principalToAccountIdentifier} from "@/utils/common";
+import {CommonStore} from "@/store/common.store";
 // @ts-ignore
-import Storage, { walletKeyType } from "../utils/storage";
-import { connect } from "react-redux";
+import Storage, {walletKeyType} from "../utils/storage";
+import {connect} from "react-redux";
+
 export interface AuthContext {
   isAuthenticated: boolean;
   isAuthReady: boolean;
   hasCanCanAccount: boolean;
 }
+
 export type VariantType = "default" | "error" | "success" | "warning" | "info";
 export type WalletType = "II" | "plugWallet";
 const II = "II";
 const plug = "plugWallet";
+
 interface Props {
   identity: any;
   isAuthClientReady: boolean;
@@ -34,7 +37,9 @@ interface Props {
     subAccountId: string;
   };
 }
+
 export const useProvideAuth = (authClient): Props => {
+
   const [_identity, _setIdentity] = useState<Identity | undefined>();
   const [isAuthClientReady, setAuthClientReady] = useState(false);
   const [principal, setPrincipal] = useState("");
@@ -60,11 +65,13 @@ export const useProvideAuth = (authClient): Props => {
         _setIdentity(identity);
         if (isAuthenticated) {
           setAuthenticated(true);
+
         }
         setAuthClientReady(true);
       }
     );
   };
+
 
   const IILogIn = async (): Promise<
     { message?: string; status?: number } | undefined
@@ -84,11 +91,13 @@ export const useProvideAuth = (authClient): Props => {
     return { message: "login error" };
   };
 
+
   const logOut = async (): Promise<void> => {
     // if (!authClient.ready) return;
     await authClient.logout();
     setAuthenticated(false);
   };
+
 
   const Context = {
     identity: _identity,
@@ -118,6 +127,7 @@ export function ProvideAuth({ children }) {
       {children}
     </authContext.Provider>
   );
+
 }
 
 export const useAuth = () => {
