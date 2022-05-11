@@ -1,18 +1,17 @@
 import { AuthClient } from "@dfinity/auth-client";
-import { Actor, HttpAgent } from "@dfinity/agent";
 import { Principal } from "@dfinity/principal";
 import { principalToAccountIdentifier } from "@/utils/common";
 import storage from "@/utils/storage";
-class Identity {
+class IIForIdentity {
   public authClient: any;
-  private url: string | unknown =
-    process.env.REACT_APP_INTERNET_IDENTITY_CANISTER_URL;
+  private url: string | unknown = "";
   public principal: any;
   private isAuthClientReady: boolean = false;
+  public marketApiActor: Promise<any> | any;
   public subAccountId: string | undefined;
   public identity: any;
   constructor() {
-    this.create();
+    // this.create();
     return this;
   }
   async create() {
@@ -27,8 +26,10 @@ class Identity {
   async login() {
     return new Promise<any>(async (resolve, reject) => {
       this.authClient.login({
-        // maxTimeToLive: BigInt(86400_000_000_000),
+        maxTimeToLive: BigInt(86400_000_000_000),
+        identityProvider: this.url,
         onSuccess: async (res) => {
+          console.log("login success");
           this.identity = await this.authClient.getIdentity();
           this.principal = this.identity.getPrincipal();
           this.isAuthClientReady = await this.authClient?.isAuthenticated();
@@ -57,7 +58,6 @@ class Identity {
   //II
   async checkLogin() {
     const authClient = await AuthClient.create();
-    console.log("check", authClient);
     if (await authClient.isAuthenticated()) {
       this.authClient = authClient;
       return Promise.resolve(true);
@@ -66,4 +66,4 @@ class Identity {
   }
 }
 
-export const authClient = new Identity();
+export const authClient = new IIForIdentity();
