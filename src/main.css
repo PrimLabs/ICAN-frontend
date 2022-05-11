@@ -84,3 +84,14 @@ a {
     width: 100%;
     min-height: 100vh;
 }
+
+
+.noBar::-webkit-scrollbar {
+    display: none;
+
+}
+
+.noBar {
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}

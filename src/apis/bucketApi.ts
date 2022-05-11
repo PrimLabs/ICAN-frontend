@@ -38,7 +38,7 @@ class Bucket {
                     await this.getActor()
                 ).depositCycles(canisterId, amount * 1e12);
                 console.log("deposit cycles", res);
-                if (Object.keys[0] === "err") reject(Object.keys(res.err)[0]);
+                if (Object.keys(res)[0] === "err") reject(Object.keys(res.err)[0]);
                 resolve(res);
             } catch (e) {
                 reject(e);
@@ -76,7 +76,7 @@ class Bucket {
                     ],
                     deploy_arguments: [],
                 });
-                if (Object.keys[0] === "err") reject(Object.keys(res.err)[0]);
+                if (Object.keys(res)[0] === "err") reject(Object.keys(res.err)[0]);
                 console.log("deploy", res);
                 resolve(res);
             } catch (e) {
@@ -157,7 +157,7 @@ class Bucket {
                         },
                     }
                 )
-                if (Object.keys[0] === "err") reject(Object.keys(res.err)[0]);
+                if (Object.keys(res)[0] === "err") reject(Object.keys(res.err)[0]);
                 console.log(res);
                 resolve(res);
             } catch (e) {

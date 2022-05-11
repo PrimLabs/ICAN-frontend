@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Gap} from "@/components";
-import {useAuth} from "@/usehooks/useAuth";
+import {useAuth} from "@/usehooks/useAuth"
+import {Typography} from 'antd';
 import {LedgerApi} from "@/apis/ledgerApi";
 import {getToAccountIdentifier} from "@/utils/common";
 import {Principal} from "@dfinity/principal";
 import Icon from "@/icons/Icon";
+import {divide} from "lodash";
 
+const {Paragraph} = Typography;
 export const Profile = ({open}: { open: boolean }) => {
     const {principal, logOut}: { principal: Principal, logOut: Function } = useAuth();
     const [balance, setBalance] = useState<number>(0);
@@ -57,11 +60,15 @@ export const Profile = ({open}: { open: boolean }) => {
         <div>
             <div className="text-5xl font-medium">Your address</div>
             <Gap height={30}/>
-            <div className="text-3xl font-normal overflow-wrap: break-all">{id}</div>
+            <Paragraph copyable={
+                {tooltips: false}
+            } className="text-3xl font-normal overflow-wrap: break-all">{id}</Paragraph>
             <Gap height={30}/>
             <div className="text-5xl font-medium">Your principal</div>
             <Gap height={30}/>
-            <div className="text-3xl font-normal overflow-wrap: break-all">{String(principal)}</div>
+            <Paragraph copyable={
+                {tooltips: false}
+            } className="text-3xl font-normal overflow-wrap: break-all">{String(principal)}</Paragraph>
             <Gap height={30}/>
             <div className="flex items-center text-5xl font-medium">
                 Balance <Gap width={6}/>

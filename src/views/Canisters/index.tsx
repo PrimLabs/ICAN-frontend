@@ -67,7 +67,7 @@ export const Canisters = () => {
         <>
             <div className=" flex flex-col pl-[200px] pr-[80px] py-[80px] w-full ">
                 <div className="flex align-center text-8xl font-medium pb-[40px]">
-                    {`${name} : ${hubId}`}
+                    {`${name}`}
                 </div>
                 <div className="flex align-center text-5xl font-medium pb-[40px]">
                     Hub Status
@@ -148,7 +148,6 @@ export const Canisters = () => {
                 ))}
             </div>
             <CreateModal
-                isUpdate={false}
                 open={create}
                 setCreate={setCreate}
                 bucket={hubId}
