@@ -33,6 +33,7 @@ export default () => {
     } = useAuth();
 
     useEffect(() => {
+        console.log(DktApi)
         if (principal) DktApi.getBucket();
     }, [principal]);
 
