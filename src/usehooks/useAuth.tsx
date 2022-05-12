@@ -7,12 +7,6 @@ import {CommonStore} from "@/store/common.store";
 // @ts-ignore
 import Storage, {walletKeyType} from "../utils/storage";
 
-export interface AuthContext {
-    isAuthenticated: boolean;
-    isAuthReady: boolean;
-    hasCanCanAccount: boolean;
-}
-
 export type VariantType = "default" | "error" | "success" | "warning" | "info";
 export type WalletType = "II" | "plugWallet";
 const II = "II";
@@ -43,15 +37,15 @@ export const useProvideAuth = (authClient): Props => {
                 authClient.getIdentity(),
                 authClient.isAuthenticated(),
             ]).then(([identity, isAuthenticated]) => {
+               if(isAuthenticated){
                 const principal = identity.getPrincipal();
                 const subAccountId = principalToAccountIdentifier(principal,0);
                 setPrincipal(principal);
                 setSubAccountId(subAccountId);
                 _setIdentity(identity);
-                if (isAuthenticated) {
                     setAuthenticated(true);
-                }
                 setAuthClientReady(true);
+               }
             });
           });
     }, []);
