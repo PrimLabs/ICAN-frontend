@@ -136,7 +136,11 @@ class Bucket {
             }
         });
     }
-
+    async canisterStatus(canisterId: Principal) : Promise<any> {
+        const res = await (await this.getActor()).canisterStatus(canisterId);
+        console.log("status canister", res)
+        return res;
+    }
     async updateCanisterSettings(
         canisterId: Principal,
         freezing_threshold: number,
