@@ -111,6 +111,7 @@ function generateWebpackConfigForCanister(name, info) {
                 },
                 { test: /\.svg|jpg$/, loader: "file-loader" },
                 { test: /\.ttf$/, loader: "file-loader" },
+                 { test: /\.wasm$/, loader: "file-loader" },
             ],
         },
         plugins: [

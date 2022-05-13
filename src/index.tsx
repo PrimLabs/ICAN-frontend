@@ -9,7 +9,13 @@ import { ProvideAuth } from "./usehooks/useAuth";
 import { toast, ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
+import { Buffer } from 'buffer';
 import "react-toastify/dist/ReactToastify.css";
+//@ts-ignore
+window.Buffer = Buffer;
+if (typeof (window as any).global === 'undefined') {
+  (window as any).global = window;
+}
 
 fontResize();
 rewriteFixed();

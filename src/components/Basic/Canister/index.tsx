@@ -6,6 +6,7 @@ import {useAuth} from "@/usehooks/useAuth";
 import {TopupModal, DeleteModal, InstallModal, CreateModal} from "@/components";
 import {useParams} from "react-router-dom";
 import {Menu, Transition} from "@headlessui/react";
+import { BucketApi } from "@/apis/bucketApi";
 import {Fragment, useEffect, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/solid";
 import {formatNumber, toHexString} from "@/utils/common";
@@ -37,8 +38,8 @@ export const Canister = ({name, canisterId, index, desc, setList, setSuperStatus
     const fetch = async () => {
         console.time("status");
         setStatus(undefined);
-        const res = await ManageApi.getCanisterStatus(canisterId);
-        setStatus(res);
+        const res = await BucketApi(hubId).canisterStatus(canisterId);
+        setStatus(res.ok);
         console.timeEnd("status");
     };
     useEffect(() => {

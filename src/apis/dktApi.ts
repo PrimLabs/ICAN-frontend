@@ -18,7 +18,8 @@ class Dkt {
         //   return await GetAgent.noIdentityActor(bucketIDL, this.canisterId);
     }
     async getBucket() {
-        const res = await (await this.getActor()).getHub();
+        console.log(await this.getActor())
+        const res:any = await (await this.getActor()).getHub();
         console.log(res);
         updateBuckets(res);
         const tmp = [];
@@ -35,7 +36,7 @@ class Dkt {
         return new Promise(async (resolve, reject) => {
             try {
                 console.log("aa", icp * 1e8);
-                const res = await (
+                const res:any = await (
                     await this.getActor()
                 ).createHub(name, icp * 1e8);
                 console.log("create bucket", res);
