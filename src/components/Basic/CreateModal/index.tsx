@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Gap } from "@/components";
+import { Input, Gap, Button } from "@/components";
 import { CreateTable } from "../CreateTable";
 import Icon from "@/icons/Icon";
 import { KitApi } from "@/apis/kitApi";
@@ -37,6 +37,7 @@ export const CreateModal = ({
   const { hubId }: { hubId: string } = useParams();
   const [value, setValue] = React.useState(0);
   const [putCanisterId, setPutCanisterId] = useState<any>();
+  const [next, setNext] = useState(false);
   const [val, setVal] = useState<any>({
     name: "",
     desc: "",
@@ -181,6 +182,16 @@ export const CreateModal = ({
             placeholder="abc"
             required
           />
+
+          <div className="w-full pt-24 flex items-center justify-center">
+            <Button
+              onClick={() => {
+                setNext(true);
+              }}
+            >
+              Next
+            </Button>
+          </div>
           <div className="flex text-3xl"></div>
         </div>
       </div>
@@ -318,94 +329,103 @@ export const CreateModal = ({
         {!toggle ? (
           <>
             <div>
-              <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                Memory Allocation
-              </label>
-              <Input
-                id="memory"
-                type="number"
-                onChange={(e) => {
-                  const data = val;
-                  data["memory"] = e.target.value;
-                  setVal(data);
-                }}
-                value={val.memory}
-                placeholder="0"
-              />
+              <div className={"px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"}>
+                <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
+                  Memory Allocation
+                </label>
+
+                <Input
+                  id="memory"
+                  type="number"
+                  onChange={(e) => {
+                    const data = val;
+                    data["memory"] = e.target.value;
+                    setVal(data);
+                  }}
+                  value={val.memory}
+                  placeholder="0"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                Compute Allocation
-              </label>
-              <Input
-                id="compute"
-                type="number"
-                onChange={(e) => {
-                  const data = val;
-                  data["compute"] = e.target.value;
-                  setVal(data);
-                }}
-                value={val.compute}
-                placeholder="0"
-              />
+            <div className={"px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"}>
+              <div>
+                <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
+                  Compute Allocation
+                </label>
+                <Input
+                  id="compute"
+                  type="number"
+                  onChange={(e) => {
+                    const data = val;
+                    data["compute"] = e.target.value;
+                    setVal(data);
+                  }}
+                  value={val.compute}
+                  placeholder="0"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                Freezing Threshold
-              </label>
-              <Input
-                id="freezing"
-                type="number"
-                onChange={(e) => {
-                  const data = val;
-                  data["freezing"] = e.target.value;
-                  setVal(data);
-                }}
-                value={val.freezing}
-                placeholder="2592000"
-              />
+            <div className={"px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"}>
+              <div>
+                <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
+                  Freezing Threshold
+                </label>
+                <Input
+                  id="freezing"
+                  type="number"
+                  onChange={(e) => {
+                    const data = val;
+                    data["freezing"] = e.target.value;
+                    setVal(data);
+                  }}
+                  value={val.freezing}
+                  placeholder="2592000"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-                Init Controllers
-              </label>
-              {val.controllers.map((v, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={"relative flex items-center mt-[1.125rem]"}
-                  >
-                    <Input
-                      id="controllers"
-                      onChange={(e) =>
-                        changeControllers(e.target.value.trim(), index)
-                      }
-                      placeholder={String(v)}
-                      value={String(v)}
-                      readOnly={index === 0 || index === 1}
-                    />
+            <div className={"px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"}>
+              <div>
+                <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
+                  Init Controllers
+                </label>
+                {val.controllers.map((v, index) => {
+                  return (
                     <div
-                      className={
-                        "absolute  right-0.5 cursor-pointer " +
-                        (index === 1 || index === 0 ? "hidden" : "flex")
-                      }
-                      onClick={() => removeController(index)}
+                      key={index}
+                      className={"relative flex items-center mt-[1.125rem]"}
                     >
-                      <Icon name={"minus"} />
+                      <Input
+                        id="controllers"
+                        onChange={(e) =>
+                          changeControllers(e.target.value.trim(), index)
+                        }
+                        placeholder={String(v)}
+                        value={String(v)}
+                        readOnly={index === 0 || index === 1}
+                      />
+                      <div
+                        className={
+                          "absolute  right-0.5 cursor-pointer " +
+                          (index === 1 || index === 0 ? "hidden" : "flex")
+                        }
+                        onClick={() => removeController(index)}
+                      >
+                        <Icon name={"minus"} />
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-              <div
-                className={"flex justify-center mt-0.5 cursor-pointer"}
-                onClick={() =>
-                  setVal({
-                    ...val,
-                    controllers: [...val.controllers, ""],
-                  })
-                }
-              >
-                <Icon name={"add"} width={"20"} height={"20"} />
+                  );
+                })}
+                <div
+                  className={"flex justify-center mt-0.5 cursor-pointer"}
+                  onClick={() =>
+                    setVal({
+                      ...val,
+                      controllers: [...val.controllers, ""],
+                    })
+                  }
+                >
+                  <Icon name={"add"} width={"20"} height={"20"} />
+                </div>
               </div>
             </div>
           </>
