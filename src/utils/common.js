@@ -4,10 +4,8 @@ import { getCrc32 } from "@dfinity/principal/lib/esm/utils/getCrc";
 import * as SHA1 from "@dfinity/principal/lib/esm/utils/sha224";
 import * as SHA2 from "js-sha256";
 import { Principal } from "@dfinity/principal";
-import { blobFromUint8Array, blobToHex } from "@dfinity/agent";
 import crc32 from "crc-32";
 import { GetAgent } from "./getAgent";
-import { getSelectedAccount } from "./identity";
 
 /**
  * @param {String} str - hex string
