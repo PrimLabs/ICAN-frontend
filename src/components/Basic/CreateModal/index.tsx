@@ -44,7 +44,7 @@ export const CreateModal = ({
     freezing: 2592000,
     memory: 0,
     compute: 0,
-    init: 0,
+    init: undefined,
     controllers: [hubId, String(principal), ...controllers, ""],
   });
   const handleFile = (e) => {
@@ -260,7 +260,7 @@ export const CreateModal = ({
             <Input
               id="cycles"
               type="number"
-              error={val.init < 0.2}
+              error={val.init < 0.2 ? "Invaild cycles balance" : ""}
               onChange={(e) => {
                 const data = JSON.parse(JSON.stringify(val));
                 data["init"] = e.target.value;
