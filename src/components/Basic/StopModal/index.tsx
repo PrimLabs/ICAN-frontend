@@ -30,7 +30,7 @@ export const StopModal = ({
           render() {
             (async () => {
               setStatus(undefined);
-              const res = await ManageApi.getCanisterStatus(canisterId);
+              const res = await BucketApi(hubId).canisterStatus(canisterId);
               setStatus(res);
             })();
             return `success !`;
@@ -49,7 +49,10 @@ export const StopModal = ({
           render() {
             (async () => {
               setStatus(undefined);
-              const res = await ManageApi.getCanisterStatus(canisterId);
+
+              console.time("ssss");
+              const res = await BucketApi(hubId).canisterStatus(canisterId);
+              console.timeEnd("ssss");
               setStatus(res);
             })();
             return `success !`;
@@ -91,7 +94,7 @@ export const StopModal = ({
                 height="36"
                 viewBox="0 0 18 18"
               >
-                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
               </svg>
             </div>
           </div>

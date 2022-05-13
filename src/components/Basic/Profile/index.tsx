@@ -64,12 +64,12 @@ export const Profile = ({open}: { open: boolean }) => {
                 {tooltips: false}
             } className="text-3xl font-normal overflow-wrap: break-all">{id}</Paragraph>
             <Gap height={30}/>
-            <div className="text-5xl font-medium">Your principal</div>
+            {/* <div className="text-5xl font-medium">Your principal</div>
             <Gap height={30}/>
             <Paragraph copyable={
                 {tooltips: false}
             } className="text-3xl font-normal overflow-wrap: break-all">{String(principal)}</Paragraph>
-            <Gap height={30}/>
+            <Gap height={30}/> */}
             <div className="flex items-center text-5xl font-medium">
                 Balance <Gap width={6}/>
                 <div

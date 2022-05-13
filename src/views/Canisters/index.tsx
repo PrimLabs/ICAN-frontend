@@ -26,7 +26,7 @@ export const Canisters = () => {
     const [list, setList] = useState([]);
     const [icp, setIcp] = useState(0);
     const [status, setStatus] = useState<any>();
-    const [version, setVersion] = useState<string>("");
+    const [version, setVersion] = useState<number>(0);
     const [addCycles, setAddCycles] = useState<boolean>(false);
     const [balance, setBalance] = useState<any>();
     const [create, setCreate] = useState<boolean>(false);
@@ -67,10 +67,11 @@ export const Canisters = () => {
     return (
         <>
             <div className=" flex flex-col pl-[200px] pr-[80px] py-[80px] w-full ">
-                <div className=""></div>
+                {version && version < 0 ? 
                 <div className="flex align-center text-8xl font-medium pb-[40px]">
                     {`${name}`} <Gap width={6} /> <Button  width="[66px]" height="[24px]" onClick={() => setUpgrade(true)}>Upgrade</Button>
-                </div>
+                </div>:"" 
+                }
                 <div className="flex align-center text-5xl font-medium pb-[40px]">
                     Hub Status
                 </div>
