@@ -31,13 +31,16 @@ export const CreateModal = ({
   controllers,
 }: Props) => {
   const { principal }: { principal: Principal } = useAuth();
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [file, setFile] = useState<string>("");
   const [data, setData] = useState<Array<number>>();
   const { hubId }: { hubId: string } = useParams();
   const [value, setValue] = React.useState(0);
   const [putCanisterId, setPutCanisterId] = useState<any>();
   const [next, setNext] = useState(false);
+  const [putName, setPutName] = useState("");
+  const [putDes, setPutDes] = useState("");
+  const [add, setAdd] = useState(false);
   const [val, setVal] = useState<any>({
     name: "",
     desc: "",
@@ -47,6 +50,34 @@ export const CreateModal = ({
     init: undefined,
     controllers: [hubId, String(principal), ...controllers, ""],
   });
+  useEffect(() => {
+    setToggle(true);
+    setFile("");
+    setData(undefined);
+    setValue(0);
+    setPutCanisterId(undefined);
+    setNext(false);
+    setPutName("");
+    setPutName("");
+    setAdd(false);
+    setVal({
+      name: "",
+      desc: "",
+      freezing: 2592000,
+      memory: 0,
+      compute: 0,
+      init: undefined,
+      controllers: [hubId, String(principal), ...controllers, ""],
+    });
+  }, [open]);
+  const checkPrincipal = (text: string) => {
+    try {
+      Principal.fromText(text);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
   const handleFile = (e) => {
     //@ts-ignore
     const file = document.getElementById("wasm").files[0];
@@ -103,7 +134,29 @@ export const CreateModal = ({
       },
     };
   };
-
+  const resultPut = () => {
+    return {
+      pending: "adding canister 😄",
+      success: {
+        render() {
+          (async () => {
+            const res = await BucketApi(hubId).getCanisters();
+            if (res.ok) setList(res.ok);
+          })();
+          (async () => {
+            const res = await BucketApi(hubId).getStatus();
+            if (res.ok) setStatus(res.ok);
+          })();
+          return `success !`;
+        },
+      },
+      error: {
+        render({ data }) {
+          return `🤯 ${data}`;
+        },
+      },
+    };
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -175,21 +228,82 @@ export const CreateModal = ({
           </label>
           <Input
             id="name"
+            type="text"
             onChange={(e) => {
               setPutCanisterId(e.target.value);
             }}
             value={putCanisterId}
-            placeholder="abc"
+            placeholder="xxxxx-...-xxx"
             required
           />
+
+          {next ? (
+            <>
+              {" "}
+              <div className="block mb-2 font-medium text-4xl text-gray-900 pt-12 dark:text-gray-300">
+                Run this command in terminal
+              </div>
+              <div className="flex text-3xl text-gray-900">
+                {" "}
+                dfx canister --network ic update-settings {putCanisterId}{" "}
+                --add-controller {hubId}
+              </div>
+              <label className="block mb-2 font-medium text-4xl pt-12 text-gray-900 dark:text-gray-300">
+                Canister name
+              </label>
+              <Input
+                id="putName"
+                type="text"
+                onChange={(e) => {
+                  setPutName(e.target.value);
+                }}
+                value={putCanisterId}
+                placeholder="abc"
+                required
+              />
+              <label className="block mb-2 font-medium text-4xl pt-12 text-gray-900 dark:text-gray-300">
+                Canister description (optional)
+              </label>
+              <Input
+                id="putDes"
+                type="text"
+                onChange={(e) => {
+                  setPutDes(e.target.value);
+                }}
+                value={putCanisterId}
+                placeholder="abc"
+                required
+              />
+            </>
+          ) : (
+            ""
+          )}
 
           <div className="w-full pt-24 flex items-center justify-center">
             <Button
               onClick={() => {
-                setNext(true);
+                if (checkPrincipal(putCanisterId) && !next) {
+                  setNext(true);
+                  setAdd(true);
+                }
+                if (next && add) {
+                  if (principal) {
+                    toast
+                      .promise(
+                        BucketApi(bucket).putCanister(
+                          putName,
+                          putDes,
+                          Principal.fromText(putCanisterId)
+                        ),
+                        resultPut()
+                      )
+                      .then();
+                    setCreate(false);
+                  }
+                }
               }}
             >
-              Next
+              {next ? "Add" : "Next"}
             </Button>
           </div>
           <div className="flex text-3xl"></div>
@@ -260,12 +374,16 @@ export const CreateModal = ({
             <Input
               id="cycles"
               type="number"
-              error={val.init < 0.2 ? "Invaild cycles balance" : ""}
               onChange={(e) => {
-                const data = JSON.parse(JSON.stringify(val));
+                let data = JSON.parse(JSON.stringify(val));
                 data["init"] = e.target.value;
                 setVal(data);
               }}
+              error={
+                Number(val.init) < 0.2 && val.init != undefined
+                  ? "Invalid cycles balance"
+                  : ""
+              }
               value={val.init}
               placeholder="minimum 0.2 T"
               required
