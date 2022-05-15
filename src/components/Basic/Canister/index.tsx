@@ -48,11 +48,9 @@ export const Canister = ({
   const [status, setStatus] = useState<any>();
   const { hubId }: { hubId: string } = useParams();
   const fetch = async () => {
-    console.time("status");
     setStatus(undefined);
     const res = await BucketApi(hubId).canisterStatus(canisterId);
     setStatus(res.ok);
-    console.timeEnd("status");
   };
   useEffect(() => {
     console.log(status);
@@ -104,6 +102,7 @@ export const Canister = ({
       />
       <TopupModal
         setStatus={setStatus}
+        setSuperStatus={setSuperStatus}
         open={topup}
         setTopup={setTopup}
         canisterId={canisterId}
