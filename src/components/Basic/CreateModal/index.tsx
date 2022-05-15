@@ -241,7 +241,7 @@ export const CreateModal = ({
             <>
               {" "}
               <div className="block mb-2 font-medium text-4xl text-gray-900 pt-12 dark:text-gray-300">
-                Run this command in terminal
+                Run this command in terminal (Versions after 0.9.3)
               </div>
               <div className="flex text-3xl text-gray-900">
                 {" "}
