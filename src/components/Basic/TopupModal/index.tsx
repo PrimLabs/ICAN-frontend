@@ -11,6 +11,7 @@ interface Props {
   setTopup: Function;
   canisterId: Principal;
   setStatus: Function;
+  setSuperStatus: Function;
   hubId: string;
 }
 export const TopupModal = ({
@@ -19,6 +20,7 @@ export const TopupModal = ({
   canisterId,
   hubId,
   setStatus,
+  setSuperStatus,
 }: Props) => {
   const [toggle, setToggle] = useState(true);
   const [val, setVal] = useState<number>(1);
@@ -31,6 +33,10 @@ export const TopupModal = ({
             setStatus(undefined);
             const res = await BucketApi(hubId).canisterStatus(canisterId);
             setStatus(res.ok);
+          })();
+          (async () => {
+            const res = await BucketApi(hubId).getStatus();
+            if (res.ok) setSuperStatus(res.ok);
           })();
           return `success !`;
         },
