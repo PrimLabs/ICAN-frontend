@@ -3,9 +3,15 @@ import { Principal } from "@dfinity/principal";
 import { KitApi } from "@/apis/kitApi";
 import { ManageApi } from "@/apis/manageApi";
 import { useAuth } from "@/usehooks/useAuth";
-import { TopupModal, DeleteModal, InstallModal } from "@/components";
+import {
+  TopupModal,
+  DeleteModal,
+  InstallModal,
+  CreateModal,
+} from "@/components";
 import { useParams } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
+import { BucketApi } from "@/apis/bucketApi";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { formatNumber, toHexString } from "@/utils/common";
@@ -13,6 +19,8 @@ import { width } from "@mui/system";
 import { StopModal } from "..";
 import Icon from "@/icons/Icon";
 import { Gap } from "../Gap";
+import UpdateModal from "@/components/Basic/UpdateModal";
+
 interface Props {
   index: number;
   name: string;
@@ -30,22 +38,25 @@ export const Canister = ({
   setList,
   setSuperStatus,
 }: Props) => {
-  const { isAuth } = useAuth();
+  const { isAuth, principal } = useAuth();
   const [topup, setTopup] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [del, setDel] = useState<number>(0);
   const [stop, setStop] = useState<number>(0);
+  const [update, setUpdate] = useState<boolean>(false);
   const [install, setInstall] = useState<boolean>(false);
   const [status, setStatus] = useState<any>();
   const { hubId }: { hubId: string } = useParams();
   const fetch = async () => {
     console.time("status");
     setStatus(undefined);
-    const res = await ManageApi.getCanisterStatus(canisterId);
-    setStatus(res);
+    const res = await BucketApi(hubId).canisterStatus(canisterId);
+    setStatus(res.ok);
     console.timeEnd("status");
   };
-
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
   useEffect(() => {
     if (isAuth) fetch();
   }, [isAuth]);
@@ -63,6 +74,19 @@ export const Canister = ({
       ) : (
         ""
       )}
+      {status ? (
+        <UpdateModal
+          open={update}
+          setOpen={setUpdate}
+          bucket={String(canisterId)}
+          setStatus={setStatus}
+          controllers={status.settings.controllers.filter(
+            (e) => String(e) !== hubId && String(e) !== String(principal)
+          )}
+        />
+      ) : (
+        ""
+      )}
       <DeleteModal
         open={del}
         setList={setList}
@@ -74,6 +98,8 @@ export const Canister = ({
       <InstallModal
         open={install}
         setOpen={setInstall}
+        setStatus={setStatus}
+        hubId={hubId}
         canisterId={canisterId}
       />
       <TopupModal
@@ -126,7 +152,7 @@ export const Canister = ({
           </>
         ) : (
           <div className="flex animate-pulse flex-row items-center w-[500px] h-24 justify-center space-x-5">
-            <div className="w-full h-full bg-gray-300 rounded-md "></div>
+            <div className="w-full h-full bg-gray-300 rounded-md " />
           </div>
         )}
         <div
@@ -187,6 +213,22 @@ export const Canister = ({
                     )}
                   </Menu.Item>
                 </div>
+                {status ? (
+                  <div className="px-1 py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active ? "bg-blue-200 text-white" : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-6 py-6`}
+                          onClick={() => setUpdate(true)}
+                        >
+                          Update
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                ) : null}
                 <div className="px-1 py-">
                   <Menu.Item>
                     {({ active }) => (
@@ -203,7 +245,6 @@ export const Canister = ({
                     )}
                   </Menu.Item>
                 </div>
-                {console.log(status)}
                 {status ? (
                   <div className="px-1 py-1">
                     <Menu.Item>
@@ -253,13 +294,22 @@ export const Canister = ({
           Canister id: {String(canisterId)}
         </div>
         {status ? (
-          <div className="flex pb-10 text-4xl">
-            Module hash: {toHexString(new Uint8Array(status.module_hash[0]))}
-          </div>
+          <>
+            <div className="flex pb-10 text-4xl">
+              Module hash: {toHexString(new Uint8Array(status.module_hash[0]))}
+            </div>
+            <div className={"flex pb-10 text-4xl"}>
+              Controllers: &nbsp;&nbsp;
+              {status.settings.controllers.map(
+                (e: Principal) => `${e.toString()} ${" "} , ${" "}`
+              )}
+            </div>
+          </>
         ) : (
           ""
         )}
       </div>
+      <Gap height={30} />
     </>
   );
 };

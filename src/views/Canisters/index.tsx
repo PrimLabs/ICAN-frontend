@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Canister, ModalWrap } from "@/components";
+import { Canister, ModalWrap, Button } from "@/components";
 import { Gap, Input } from "@/components";
 import { BucketApi } from "@/apis/bucketApi";
 import { Principal } from "@dfinity/principal";
@@ -12,20 +12,23 @@ import { LedgerApi } from "@/apis/ledgerApi";
 import { CreateModal } from "@/components";
 import { DktApi } from "@/apis/dktApi";
 import { getToAccountIdentifier } from "@/utils/common";
-import { AddCycles } from "./components";
+import { AddCycles, Upgrade } from "./components";
 import Create from "../Create";
 import Storage from "@/utils/storage";
 import { useParams } from "react-router-dom";
 const items = ["name", "status", "install", "stop/start", "top up", "delete"];
+
 interface Props {}
+
 export const Canisters = () => {
   const [list, setList] = useState([]);
   const [icp, setIcp] = useState(0);
   const [status, setStatus] = useState<any>();
-  const [version, setVersion] = useState<string>("");
+  const [version, setVersion] = useState<number | undefined>(undefined);
   const [addCycles, setAddCycles] = useState<boolean>(false);
   const [balance, setBalance] = useState<any>();
   const [create, setCreate] = useState<boolean>(false);
+  const [upgrade, setUpgrade] = useState<boolean>(false);
   const { hubId, name }: { hubId: string; name: string } = useParams();
   const {
     isAuth,
@@ -54,7 +57,7 @@ export const Canisters = () => {
         })();
         (async () => {
           const res = await BucketApi(hubId).getVersion();
-          setVersion(res.ok);
+          setVersion(res);
         })();
       }
     }
@@ -62,8 +65,16 @@ export const Canisters = () => {
   return (
     <>
       <div className=" flex flex-col pl-[200px] pr-[80px] py-[80px] w-full ">
-        <div className="flex align-center text-8xl font-medium pb-[40px]">
-          {name}
+        <div className="flex items-center text-8xl font-medium pb-[40px]">
+          {`${name}`} <Gap width={6} />
+          {console.log(version, "aaaaaa")}
+          {version != undefined && Number(version) < 1 ? (
+            <Button width="w-40" height="h-14" onClick={() => setUpgrade(true)}>
+              Upgrade
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
         <div className="flex align-center text-5xl font-medium pb-[40px]">
           Hub Status
@@ -129,21 +140,18 @@ export const Canisters = () => {
           <div className="w-[200px] text-5xl font-medium">Options</div>
         </div>
         {list.map((res: any, index) => (
-          <>
-            <div>
-              {/* @ts-ignore */}
-              <Canister
-                key={String(res.canister_id)}
-                name={res.name}
-                desc={res.description}
-                index={index}
-                canisterId={res.canister_id}
-                setList={setList}
-                setSuperStatus={setStatus}
-              />
-            </div>
-            <Gap height={30} />
-          </>
+          <div key={index}>
+            {/* @ts-ignore */}
+            <Canister
+              key={String(res.canister_id)}
+              name={res.name}
+              desc={res.description}
+              index={index}
+              canisterId={res.canister_id}
+              setList={setList}
+              setSuperStatus={setStatus}
+            />
+          </div>
         ))}
       </div>
       <CreateModal
@@ -152,6 +160,7 @@ export const Canisters = () => {
         bucket={hubId}
         setList={setList}
         setStatus={setStatus}
+        controllers={[]}
       />
       <ModalWrap setOpen={setAddCycles} open={addCycles}>
         <AddCycles
@@ -159,6 +168,14 @@ export const Canisters = () => {
           hubId={hubId}
           setStatus={setStatus}
           open={addCycles}
+        />
+      </ModalWrap>
+      <ModalWrap setOpen={setUpgrade} open={upgrade}>
+        <Upgrade
+          setOpen={setUpgrade}
+          hubId={hubId}
+          open={upgrade}
+          setVersion={setVersion}
         />
       </ModalWrap>
     </>
