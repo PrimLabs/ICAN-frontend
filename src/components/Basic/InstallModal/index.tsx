@@ -74,7 +74,7 @@ export const InstallModal = ({
             (async () => {
               setStatus(undefined);
               const res = await BucketApi(hubId).canisterStatus(canisterId);
-              setStatus(res);
+              setStatus(res.ok);
             })();
             return `success !`;
           },

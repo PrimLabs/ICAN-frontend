@@ -31,7 +31,7 @@ export const StopModal = ({
             (async () => {
               setStatus(undefined);
               const res = await BucketApi(hubId).canisterStatus(canisterId);
-              setStatus(res);
+              setStatus(res.ok);
             })();
             return `success !`;
           },
@@ -49,11 +49,8 @@ export const StopModal = ({
           render() {
             (async () => {
               setStatus(undefined);
-
-              console.time("ssss");
               const res = await BucketApi(hubId).canisterStatus(canisterId);
-              console.timeEnd("ssss");
-              setStatus(res);
+              setStatus(res.ok);
             })();
             return `success !`;
           },

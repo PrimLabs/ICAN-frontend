@@ -29,8 +29,8 @@ export const TopupModal = ({
         render() {
           (async () => {
             setStatus(undefined);
-            const res = await ManageApi.canisterStatus(canisterId);
-            setStatus(res);
+            const res = await BucketApi(hubId).canisterStatus(canisterId);
+            setStatus(res.ok);
           })();
           return `success !`;
         },

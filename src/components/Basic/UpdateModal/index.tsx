@@ -67,7 +67,7 @@ function UpdateModal({ open, setOpen, controllers, bucket, setStatus }: Props) {
                 const res = await BucketApi(hubId).canisterStatus(
                   Principal.from(bucket)
                 );
-                setStatus(res);
+                setStatus(res.ok);
               })();
               return `success !`;
             },
