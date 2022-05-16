@@ -86,6 +86,14 @@ export default () => {
           mail {copied ? "copied" : ""}
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
+        <div
+          onClick={() => {
+            window.open(`https://discord.gg/2Gw2EVj9uw`, "_blank");
+          }}
+          className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8"
+        >
+          <Icon name="discord" />
+        </div>
       </div>
       <Gap height={30} />
       {isAuth ? (
