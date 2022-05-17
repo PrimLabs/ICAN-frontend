@@ -280,7 +280,7 @@ export const Canister = ({
             className="flex items-center underline cursor-pointer"
             onClick={() => {
               window.open(
-                `https://test.icscan.io/canister/${String(canisterId)}`,
+                `https://icscan.io/canister/${String(canisterId)}`,
                 "_blank"
               );
             }}
