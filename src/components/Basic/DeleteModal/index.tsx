@@ -79,9 +79,6 @@ export const DeleteModal = ({
           </div>
 
           <div className="flex justify-center py-[30px]">
-            {/* <button className="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">
-                            Action
-                        </button> */}
             <button
               className="bg-blue-400 px-[40px] py-[10px] rounded-lg text-white text-4xl hover:bg-blue-300"
               onClick={() => handleClick()}

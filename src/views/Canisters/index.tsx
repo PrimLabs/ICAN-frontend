@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Canister, ModalWrap} from "@/components";
+import {Canister, ModalWrap,Button} from "@/components";
 import {Gap, Input} from "@/components";
 import {BucketApi} from "@/apis/bucketApi";
 import {Principal} from "@dfinity/principal";
@@ -12,14 +12,14 @@ import {LedgerApi} from "@/apis/ledgerApi";
 import {CreateModal} from "@/components";
 import {DktApi} from "@/apis/dktApi";
 import {getToAccountIdentifier} from "@/utils/common";
-import {AddCycles} from "./components";
+import {AddCycles , Upgrade} from "./components";
 import Create from "../Create";
 import Storage from "@/utils/storage";
 import {useParams} from "react-router-dom";
-
 const items = ["name", "status", "install", "stop/start", "top up", "delete"];
 
 interface Props {
+    
 }
 
 export const Canisters = () => {
@@ -30,6 +30,7 @@ export const Canisters = () => {
     const [addCycles, setAddCycles] = useState<boolean>(false);
     const [balance, setBalance] = useState<any>();
     const [create, setCreate] = useState<boolean>(false);
+    const [upgrade,setUpgrade] = useState<boolean>(false);
     const {hubId, name}: { hubId: string; name: string } = useParams();
     const {
         isAuth,
@@ -66,8 +67,9 @@ export const Canisters = () => {
     return (
         <>
             <div className=" flex flex-col pl-[200px] pr-[80px] py-[80px] w-full ">
+                <div className=""></div>
                 <div className="flex align-center text-8xl font-medium pb-[40px]">
-                    {`${name}`}
+                    {`${name}`} <Gap width={6} /> <Button  width="[66px]" height="[24px]" onClick={() => setUpgrade(true)}>Upgrade</Button>
                 </div>
                 <div className="flex align-center text-5xl font-medium pb-[40px]">
                     Hub Status
@@ -162,6 +164,9 @@ export const Canisters = () => {
                     setStatus={setStatus}
                     open={addCycles}
                 />
+            </ModalWrap>
+            <ModalWrap setOpen={setUpgrade} open={upgrade} >
+                <Upgrade setOpen={setUpgrade} hubId={hubId} open={upgrade} />
             </ModalWrap>
         </>
     );

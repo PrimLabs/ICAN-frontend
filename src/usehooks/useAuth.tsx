@@ -1,23 +1,11 @@
-import React, {
-    useContext,
-    createContext,
-    useEffect,
-    useState,
-    useCallback,
-} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {authClient} from "@/utils/getAgent/identity";
 import {Identity} from "@dfinity/agent";
-import {principalToAccountIdentifier} from "@/utils/common";
+import { Principal } from "@dfinity/principal";
+import {getToAccountIdentifier, principalToAccountIdentifier} from "@/utils/common";
 import {CommonStore} from "@/store/common.store";
 // @ts-ignore
 import Storage, {walletKeyType} from "../utils/storage";
-import {connect} from "react-redux";
-
-export interface AuthContext {
-    isAuthenticated: boolean;
-    isAuthReady: boolean;
-    hasCanCanAccount: boolean;
-}
 
 export type VariantType = "default" | "error" | "success" | "warning" | "info";
 export type WalletType = "II" | "plugWallet";
@@ -29,13 +17,9 @@ interface Props {
     isAuthClientReady: boolean;
     principal: string;
     logOut: Function;
+    IILogIn: Function;
     isAuth: boolean;
     subAccountId: string;
-    walletType: string;
-    userInfo: {
-        principal: string;
-        subAccountId: string;
-    };
 }
 
 export const useProvideAuth = (authClient): Props => {
@@ -44,54 +28,49 @@ export const useProvideAuth = (authClient): Props => {
     const [principal, setPrincipal] = useState("");
     const [authenticated, setAuthenticated] = useState(false);
     const [subAccountId, setSubAccountId] = useState("");
-    const [walletType, setWalletType] = useState<WalletType>("II");
-    if (!isAuthClientReady)
-        authClient.create().then(() => setAuthClientReady(true));
+  
     useEffect(() => {
-        const type = Storage.getWalletTypeStorage();
-        //set wallet type
-        if (type === II) {
-            checkII();
-        } else if (type === plug) {
-        }
+       if (!isAuthClientReady)
+        authClient.create().then(() => {
+          setAuthClientReady(true);
+            Promise.all([
+                authClient.getIdentity(),
+                authClient.isAuthenticated(),
+            ]).then(([identity, isAuthenticated]) => {
+               if(isAuthenticated){
+                const principal = identity.getPrincipal();
+                const subAccountId = principalToAccountIdentifier(principal,0);
+                setPrincipal(principal);
+                setSubAccountId(subAccountId);
+                _setIdentity(identity);
+                    setAuthenticated(true);
+                setAuthClientReady(true);
+               }
+            });
+          });
     }, []);
     //update principal
     useEffect(() => {
         authClient.setOwnerPrincipal(principal);
     }, [principal]);
-    const checkII = async () => {
-        const connected = await authClient.checkLogin();
-        console.log(connected);
-        if (connected) {
-            const identity = await authClient.getIdentity();
-            _setIdentity(identity);
-            const principal = await identity.getPrincipal();
-            setPrincipal(principal);
-            const subAccountId = principalToAccountIdentifier(principal, 0);
-            console.log("login success");
-            setSubAccountId(subAccountId);
-            setAuthenticated(true);
-            setWalletType("II");
-            Storage.setWalletTypeStorage("II");
-        }
-    };
-
+  
     const IILogIn = async (): Promise<{ message?: string; status?: number } | undefined> => {
-        const result = await authClient.login();
-        console.log(result);
-        if (result) {
-            const principal = result.getPrincipal();
-            setPrincipal(principal);
-            const subAccountId = principalToAccountIdentifier(principal, 0);
-            setSubAccountId(subAccountId);
+        if (!authClient) return {message: "connect error"};
+        const identity = await authClient.login();
+        const principal = identity.getPrincipal();
+        const subAccountId = principalToAccountIdentifier(principal,0);
+        setPrincipal(principal);
+        setSubAccountId(subAccountId);
+        if (identity) {
+            _setIdentity(_identity);
             setAuthenticated(true);
-            setWalletType("II");
             Storage.setWalletTypeStorage("II");
-            return {status: 200};
+        } else {
+            return {message: "connect error"};
         }
-        return {message: "login error"};
     };
 
+   
     const logOut = async (): Promise<void> => {
         // if (!authClient.ready) return;
         await authClient.logout();
@@ -102,15 +81,10 @@ export const useProvideAuth = (authClient): Props => {
         identity: _identity,
         isAuthClientReady,
         principal,
+        IILogIn,
         logOut,
         isAuth: authenticated,
-        IILogIn,
         subAccountId,
-        walletType,
-        userInfo: {
-            principal,
-            subAccountId,
-        },
     };
     //save common data
     CommonStore.actionSave({...Context});

@@ -1,13 +1,14 @@
 import React, {useEffect} from "react";
 import Icon from "@/icons/Icon";
 import {Principal} from "@dfinity/principal";
-import {Gap, ModalWrap, Profile} from "@/components";
+import {Gap, ModalWrap, Profile, ToolTip} from "@/components";
 import {useAuth} from "@/usehooks/useAuth";
 import Storage from "@/utils/storage";
 import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
 import "flowbite";
 import "tailwindcss/tailwind.css";
+import "@/index.css"
 import {RootState} from "@/redux/store";
 
 export const SiderBar = () => {
@@ -41,28 +42,21 @@ export const SiderBar = () => {
             </ModalWrap>
 
             <div
-                className="fixed h-full w-[120px]  top-1 rounded shadow-2xl bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-25 border border-gray-200 flex flex-col justify-start items-center ">
+              className="fixed h-full w-[120px]  top-1 rounded shadow-2xl bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-25 border border-gray-200 flex flex-col justify-start items-center overflow-x-visible overflow-y-scroll noBar">
+
                 <Gap height={40}/>
+
+               <ToolTip title="home" placement="right" >
                 <div
-                    id="tooltip-home"
-                    role="tooltip"
-                    className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-                    onClick={() => {
-                        history.push("/");
-                    }}
-                >
+                    className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer" 
+                    onClick={() => { history.push("/"); }} > 
                     <Icon name="home"/>
                 </div>
-                <div
-                    id="tooltip-home"
-                    role="tooltip"
-                    className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                    home
-                    <div className="tooltip-arrow" data-popper-arrow/>
-                </div>
+                </ToolTip>
+              
                 {isAuth ? (
                     <>
+                        <ToolTip title="profile" placement="right" >
                         <div
                             data-tooltip-target="tooltip-profile"
                             data-tooltip-placement="right"
@@ -73,55 +67,46 @@ export const SiderBar = () => {
                         >
                             <Icon name="account"/>
                         </div>
-                        <div
-                            id="tooltip-profile"
-                            role="tooltip"
-                            className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                        >
-                            user info
-                            <div className="tooltip-arrow" data-popper-arrow/>
-                        </div>
+                        </ToolTip>
+                    
                     </>
                 ) : (
+                     <ToolTip title="login" placement="right" >
                     <div
                         className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
                         onClick={() => IILogIn()}
                     >
                         <Icon name="login"/>
                     </div>
+                    </ToolTip>
                 )}
-                <div
-                    data-tooltip-target="tooltip-right"
-                    data-tooltip-placement="right"
-                    className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-                    onClick={() => {
-                        history.push("/createhub");
-                    }}
-                >
-                    <Icon name="add"/>
-                </div>
-                <div
-                    id="tooltip-right"
-                    role="tooltip"
-                    className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                    create hub
-                    <div className="tooltip-arrow" data-popper-arrow></div>
-                </div>
+                 <ToolTip title="create hub" placement="right" >
+                    <div
+                        data-tooltip-target="tooltip-right"
+                        data-tooltip-placement="right"
+                        className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
+                        onClick={() => {
+                            history.push("/createhub");
+                        }}
+                    >
+                        <Icon name="add"/>
+                    </div>
+                </ToolTip>
+              
                 {isAuth &&
                     buckets.map((v, k) => {
                         return (
-                            <div
-                                data-tooltip-target={"tooltip-hub"}
-                                data-tooltip-placement="right"
-                                key={k}
-                                className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-                                onClick={() => {
-                                    history.push(`/hub/${v[0]}/${v[1]}`);
-                                }}
-                            >
-                                <Icon name="station"/>
-                            </div>
+                             <ToolTip title={`hub ${v[0]}`} placement="right" >
+                                <div
+                                    key={k}
+                                    className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
+                                    onClick={() => {
+                                        history.push(`/hub/${v[0]}/${v[1]}`);
+                                    }}
+                                >
+                                    <Icon name="station"/>
+                                </div>
+                            </ToolTip>
                         );
                     })}
                 <div

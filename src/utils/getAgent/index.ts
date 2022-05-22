@@ -35,25 +35,12 @@ class Agent {
     async getIdentity(): Promise<any> {
         return await authClient.getIdentity();
     }
-    async createActor(idlFactory: any, canisterId: string | any) {
-        const { walletType } = CommonStore.common;
-        switch (walletType) {
-            case "II":
-                const agent = await this.getAgent();
-                return Actor.createActor(idlFactory, {
-                    agent,
-                    canisterId,
-                });
-
-            case "plugWallet":
-                // @ts-ignore
-                return window?.ic?.plug.createActor({
-                    canisterId: canisterId,
-                    interfaceFactory: idlFactory,
-                });
-            default:
-                return;
-        }
+    async createActor(idlFactory: any, canisterId: string | any) : Promise<any>{
+        const agent = await this.getAgent();
+            return Actor.createActor(idlFactory, {
+                agent,
+                canisterId,
+            });
     }
 
     async noIdentityActor(

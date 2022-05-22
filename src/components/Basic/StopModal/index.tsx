@@ -44,7 +44,7 @@ export const StopModal = ({
       });
     else
       toast.promise(BucketApi(hubId).startCanister(canisterId), {
-        pending: "star canister ",
+        pending: "start canister ",
         success: {
           render() {
             (async () => {
