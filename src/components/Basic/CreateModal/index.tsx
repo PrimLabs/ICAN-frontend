@@ -60,15 +60,6 @@ export const CreateModal = ({
     setPutName("");
     setPutName("");
     setAdd(false);
-    setVal({
-      name: "",
-      desc: "",
-      freezing: 2592000,
-      memory: 0,
-      compute: 0,
-      init: undefined,
-      controllers: [hubId, String(principal), ...controllers, ""],
-    });
   }, [open]);
   const checkPrincipal = (text: string) => {
     try {
