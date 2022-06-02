@@ -76,7 +76,7 @@ export default () => {
           }}
           className="flex items-center rounded bg-slate-100 hover hover:shadow-lg cursor-pointer w-[80px] h-[80px] px-8"
         >
-          <Icon name="mail" />
+          {/*<Icon name="mail" />*/}
         </div>
         <div
           id="tooltip-mail"

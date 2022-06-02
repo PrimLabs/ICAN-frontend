@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Input, Gap, Button } from "@/components";
-import { CreateTable } from "../CreateTable";
+import React, {useState, useEffect} from "react";
+import {Input, Gap, Button} from "@/components";
+import {CreateTable} from "../CreateTable";
 import Icon from "@/icons/Icon";
-import { KitApi } from "@/apis/kitApi";
-import { ManageApi } from "@/apis/manageApi";
-import { BucketApi } from "@/apis/bucketApi";
-import { Principal } from "@dfinity/principal";
-import { useAuth } from "@/usehooks/useAuth";
-import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import {KitApi} from "@/apis/kitApi";
+import {ManageApi} from "@/apis/manageApi";
+import {BucketApi} from "@/apis/bucketApi";
+import {Principal} from "@dfinity/principal";
+import {useAuth} from "@/usehooks/useAuth";
+import {toast} from "react-toastify";
+import {useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -23,18 +23,18 @@ interface Props {
 }
 
 export const CreateModal = ({
-  bucket,
-  open,
-  setCreate,
-  setList,
-  setStatus,
-  controllers,
-}: Props) => {
-  const { principal }: { principal: Principal } = useAuth();
+                              bucket,
+                              open,
+                              setCreate,
+                              setList,
+                              setStatus,
+                              controllers,
+                            }: Props) => {
+  const {principal}: { principal: Principal } = useAuth();
   const [toggle, setToggle] = useState(true);
   const [file, setFile] = useState<string>("");
   const [data, setData] = useState<Array<number>>();
-  const { hubId }: { hubId: string } = useParams();
+  const {hubId}: { hubId: string } = useParams();
   const [value, setValue] = React.useState(0);
   const [putCanisterId, setPutCanisterId] = useState<any>();
   const [next, setNext] = useState(false);
@@ -50,6 +50,12 @@ export const CreateModal = ({
     init: undefined,
     controllers: [hubId, String(principal), ...controllers, ""],
   });
+
+  useEffect(() => {
+    const newOne = val
+    setVal({...newOne, controllers: [hubId, String(principal), ...controllers, ""]})
+  }, [hubId])
+
   useEffect(() => {
     setToggle(true);
     setFile("");
@@ -97,7 +103,8 @@ export const CreateModal = ({
     Array.prototype.forEach.call(val.controllers, (e) => {
       try {
         controllers.push(Principal.from(e));
-      } catch (e) {}
+      } catch (e) {
+      }
     });
     return controllers;
   };
@@ -119,7 +126,7 @@ export const CreateModal = ({
         },
       },
       error: {
-        render({ data }) {
+        render({data}) {
           return `🤯 ${data}`;
         },
       },
@@ -142,7 +149,7 @@ export const CreateModal = ({
         },
       },
       error: {
-        render({ data }) {
+        render({data}) {
           return `🤯 ${data}`;
         },
       },
@@ -156,20 +163,20 @@ export const CreateModal = ({
     const controllers = standardControllers();
     if (principal) {
       toast
-        .promise(
-          BucketApi(bucket).deployCanister(
-            val.freezing,
-            val.memory,
-            val.compute,
-            val.name,
-            val.desc,
-            val.init,
-            controllers,
-            data
-          ),
-          result()
-        )
-        .then();
+      .promise(
+        BucketApi(bucket).deployCanister(
+          val.freezing,
+          val.memory,
+          val.compute,
+          val.name,
+          val.desc,
+          val.init,
+          controllers,
+          data
+        ),
+        result()
+      )
+      .then();
       setCreate(false);
     }
   };
@@ -182,19 +189,19 @@ export const CreateModal = ({
   const changeControllers = (controller: string, index: number) => {
     const controllers = val.controllers;
     controllers[index] = controller;
-    setVal({ ...val, controllers: controllers });
+    setVal({...val, controllers: controllers});
   };
 
   const removeController = (index: number) => {
     const controllers = val.controllers;
     controllers.splice(index, 1);
-    setVal({ ...val, controllers: controllers });
+    setVal({...val, controllers: controllers});
   };
 
   const toggleClass = "transform translate-x-14";
   const AddContent = (
     <>
-      <Gap height={30} />
+      <Gap height={30}/>
       <div className="flex justify-between items-center pb-[20px]">
         <p className="text-5xl font-medium">Add an existing canister</p>
         <div
@@ -208,7 +215,8 @@ export const CreateModal = ({
             height="36"
             viewBox="0 0 18 18"
           >
-            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+            <path
+              d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
           </svg>
         </div>
       </div>
@@ -280,15 +288,15 @@ export const CreateModal = ({
                 if (next && add) {
                   if (principal) {
                     toast
-                      .promise(
-                        BucketApi(bucket).putCanister(
-                          putName,
-                          putDes,
-                          Principal.fromText(putCanisterId)
-                        ),
-                        resultPut()
-                      )
-                      .then();
+                    .promise(
+                      BucketApi(bucket).putCanister(
+                        putName,
+                        putDes,
+                        Principal.fromText(putCanisterId)
+                      ),
+                      resultPut()
+                    )
+                    .then();
                     setCreate(false);
                   }
                 }
@@ -304,7 +312,7 @@ export const CreateModal = ({
   );
   const CreateContent = (
     <>
-      <Gap height={30} />
+      <Gap height={30}/>
       <div className="flex justify-between items-center pb-[20px]">
         <p className="text-5xl font-medium"> Create Canister</p>
 
@@ -319,7 +327,8 @@ export const CreateModal = ({
             height="36"
             viewBox="0 0 18 18"
           >
-            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+            <path
+              d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
           </svg>
         </div>
       </div>
@@ -397,7 +406,8 @@ export const CreateModal = ({
                   height="18"
                   viewBox="0 0 18 18"
                 >
-                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                  <path
+                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                 </svg>
               </div>
             </div>
@@ -410,7 +420,7 @@ export const CreateModal = ({
                 onChange={(e) => handleFile(e)}
               />
               <div className="text-center p-10 flex flex-col items-center justify-center h-full w-full">
-                <Icon name="file" />
+                <Icon name="file"/>
                 <p className="text-3xl">Select File or Drop File</p>
               </div>
             </div>
@@ -498,6 +508,7 @@ export const CreateModal = ({
                   Init Controllers
                 </label>
                 {val.controllers.map((v, index) => {
+                  console.log(val.controllers)
                   return (
                     <div
                       key={index}
@@ -519,7 +530,7 @@ export const CreateModal = ({
                         }
                         onClick={() => removeController(index)}
                       >
-                        <Icon name={"minus"} />
+                        <Icon name={"minus"}/>
                       </div>
                     </div>
                   );
@@ -533,7 +544,7 @@ export const CreateModal = ({
                     })
                   }
                 >
-                  <Icon name={"add"} width={"20"} height={"20"} />
+                  <Icon name={"add"} width={"20"} height={"20"}/>
                 </div>
               </div>
             </div>
@@ -565,12 +576,13 @@ export const CreateModal = ({
         className="absolute w-full h-full bg-gray-900 opacity-25 "
         onClick={() => setCreate(false)}
       />
-      <div className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px] h-[700px] p-[20px] rounded shadow-lg z-50 overflow-y-scroll noBar">
+      <div
+        className="bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 w-[600px] h-[700px] p-[20px] rounded shadow-lg z-50 overflow-y-scroll noBar">
         <div className="modal-content py-4 text-left px-6">
           <Box className="">
             <Tabs value={value} onChange={handleChange} centered>
-              <Tab label="Create" />
-              <Tab label="Add" />
+              <Tab label="Create"/>
+              <Tab label="Add"/>
             </Tabs>
           </Box>
           {value ? AddContent : CreateContent}
