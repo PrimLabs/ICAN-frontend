@@ -166,7 +166,7 @@ export default () => {
         } hover:bg-blue-200`}
         onClick={() => handleCreate()}
         disabled={
-          loading || !balance || balance < icp || name.length > 8
+          loading || !balance || balance < icp || icp < 0.2 || name.length > 8
         }
       >
         Create
