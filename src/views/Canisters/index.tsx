@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Canister, ModalWrap, Button } from "@/components";
+import { Canister, ModalWrap, Button, HubInfo } from "@/components";
 import { Gap, Input } from "@/components";
 import { BucketApi } from "@/apis/bucketApi";
 import { Principal } from "@dfinity/principal";
@@ -27,6 +27,7 @@ export const Canisters = () => {
   const [version, setVersion] = useState<number | undefined>(undefined);
   const [addCycles, setAddCycles] = useState<boolean>(false);
   const [balance, setBalance] = useState<any>();
+  const [info, setInfo] = useState<boolean>(false);
   const [create, setCreate] = useState<boolean>(false);
   const [upgrade, setUpgrade] = useState<boolean>(false);
   const { hubId, name }: { hubId: string; name: string } = useParams();
@@ -57,7 +58,7 @@ export const Canisters = () => {
         })();
         (async () => {
           const res = await BucketApi(hubId).getVersion();
-          setVersion(res);
+          setVersion(Number(res));
         })();
       }
     }
@@ -67,14 +68,22 @@ export const Canisters = () => {
       <div className=" flex flex-col pl-[200px] pr-[80px] py-[80px] w-full ">
         <div className="flex items-center text-8xl font-medium pb-[40px]">
           {`${name}`} <Gap width={6} />
-          {console.log(version, "aaaaaa")}
-          {version != undefined && Number(version) < 1 ? (
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              setInfo(true);
+            }}
+          >
+            <Icon name="more" />{" "}
+          </div>
+          {/* {console.log(version, "aaaaaa")} */}
+          {/*version != undefined && Number(version) < 1 ? (
             <Button width="w-40" height="h-14" onClick={() => setUpgrade(true)}>
               Upgrade
             </Button>
           ) : (
             ""
-          )}
+          )} */}
         </div>
         <div className="flex align-center text-5xl font-medium pb-[40px]">
           Hub Status
@@ -168,6 +177,14 @@ export const Canisters = () => {
           hubId={hubId}
           setStatus={setStatus}
           open={addCycles}
+        />
+      </ModalWrap>
+      <ModalWrap setOpen={setInfo} open={info}>
+        <HubInfo
+          setOpen={setInfo}
+          open={info}
+          version={version}
+          setUpgrade={setUpgrade}
         />
       </ModalWrap>
       <ModalWrap setOpen={setUpgrade} open={upgrade}>

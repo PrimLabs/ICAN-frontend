@@ -10,7 +10,8 @@ export * from "./Profile";
 export * from "./InstallModal";
 export * from "./StopModal";
 export * from "./Skeleton";
-export * from "./ToolTip"
-export * from "./ToolTipContent"
-export * from "./CreateTable"
-export * from "./Button"
+export * from "./ToolTip";
+export * from "./ToolTipContent";
+export * from "./CreateTable";
+export * from "./Button";
+export * from "./HubInfo";

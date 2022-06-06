@@ -1,7 +1,7 @@
 import { width } from "@mui/system";
 import "./Icon.css";
 
-export type Name = "add"|"login"|"account"|"file"|"station"|"spin"|"discord"|"twitter"|"github"|"document"|"link"|"refresh"|"home"|"minus"|"mail";
+export type Name = "add"|"login"|"account"|"file"|"station"|"spin"|"discord"|"twitter"|"github"|"document"|"link"|"refresh"|"home"|"minus"|"mail"|"more";
 
 interface Props {
     name: Name;
@@ -76,6 +76,10 @@ const Icon = ({ name, bg, color, width, height,spin }: Props) => {
             return <svg xmlns="http://www.w3.org/2000/svg" className="h-[48px] w-[48px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
+        case "more":
+            return <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+          </svg>
         default:
             return null;
     }
