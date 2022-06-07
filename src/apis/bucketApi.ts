@@ -101,13 +101,11 @@ class Bucket {
 
   async getStatus(): Promise<any> {
     const res = await (await this.getActor()).getStatus();
-    console.log("status", res);
     return res;
   }
 
   async getVersion(): Promise<any> {
     const res = await (await this.getActor()).getVersion();
-    console.log("version", res);
     return res;
   }
 
@@ -138,7 +136,6 @@ class Bucket {
   }
   async canisterStatus(canisterId: Principal): Promise<any> {
     const res = await (await this.getActor()).canisterStatus(canisterId);
-    console.log("status canister", res);
     return res;
   }
   async updateCanisterSettings(

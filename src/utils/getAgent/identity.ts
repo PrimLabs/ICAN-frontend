@@ -49,7 +49,7 @@ class IIForIdentity {
     return await this.authClient?.logout({ returnTo: "/" });
   }
 
-  async getIdentity() {
+  getIdentity() {
     return this.authClient?.getIdentity();
   }
 

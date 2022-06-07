@@ -6,6 +6,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import legacy from "@vitejs/plugin-legacy";
 import polyfillNode from "rollup-plugin-polyfill-node";
 import history from "vite-plugin-history";
+import requireTransform from "vite-plugin-require-transform";
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -25,6 +26,7 @@ export default ({ mode }) => {
           },
         ],
       }),
+      requireTransform({}),
     ],
     publicDir: "public",
     base: "./",

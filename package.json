@@ -74,6 +74,7 @@
     "lottie-web": "^5.7.8",
     "module-alias": "^2.2.2",
     "patch-package": "^6.4.7",
+    "protobufjs": "^6.11.3",
     "qrcode.react": "^1.0.1",
     "rc-slider": "^9.7.4",
     "react": "^17.0.2",
@@ -89,13 +90,16 @@
     "styled-components": "^5.3.0",
     "typescript": "^4.3.4",
     "vite": "^2.9.9",
-    "vite-plugin-history": "^1.0.2"
+    "vite-plugin-history": "^1.0.2",
+    "vite-plugin-require-transform": "^1.0.3"
   },
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "webpack",
     "start-s": "npm run build && cd dist && python3 -m http.server 3000",
     "start": "vite",
+    "pbjs": "pbjs --dependency protobufjs/minimal.js --target static-module -wrap commonjs --out src/proto/proto.js  src/public/assets/proto/*.proto",
+    "pbts": "pbts --main --out src/proto/proto.d.ts src/proto/*.js && node src/utils/wrap-pbts-result.js",
     "postinstall": "patch-package"
   }
 }

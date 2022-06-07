@@ -16,7 +16,7 @@
       "@Basic/*": ["src/components/Basic/*"],
       "@components/*": ["src/components/*"]
     },
-
+    "outDir": "./",
     "target": "es2018",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -25,5 +25,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "node_modules", "dist"]
 }
