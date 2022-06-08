@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 
 interface Props {
-  id: string;
+  id?: string;
   placeholder: string;
   onChange: Function;
   required?: boolean;

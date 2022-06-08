@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Canister } from "@/components";
-import { Gap, Input, Skeleton } from "@/components";
+import { Gap, Input, Skeleton, Button } from "@/components";
 import { BucketApi } from "@/apis/bucketApi";
 import { Principal } from "@dfinity/principal";
 import { RadialProgress } from "react-daisyui";
@@ -11,15 +11,21 @@ import { RootState } from "@/redux/store";
 import { LedgerApi } from "@/apis/ledgerApi";
 import { DktApi } from "@/apis/dktApi";
 import { getToAccountIdentifier } from "@/utils/common";
+import { Box, Tab, Tabs } from "@mui/material";
 import { toast } from "react-toastify";
 import Storage from "@/utils/storage";
+import { KitApi } from "@/apis/kitApi";
 export default () => {
   const [icp, setIcp] = useState(0);
   const [status, setStatus] = useState<any>();
   const [balance, setBalance] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [value, setValue] = useState<number>(0);
   const [name, setName] = useState<string>("");
+  const [addId, setAddId] = useState<string>("");
+  const [addName, setAddName] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean>(false);
   const {
     isAuth,
     logOut,
@@ -64,6 +70,14 @@ export default () => {
       },
     });
   };
+  const checkPrincipal = (text: string) => {
+    try {
+      Principal.fromText(text);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
   const handleRefresh = () => {
     if (principal) {
       (async () => {
@@ -78,6 +92,9 @@ export default () => {
         setBalance(Number(res.e8s) / 1e8);
       })();
     }
+  };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
   useEffect(() => {
     if (principal) {
@@ -94,9 +111,9 @@ export default () => {
       })();
     }
   }, [principal]);
-
-  return (
-    <div className="flex flex-col w-full h-screen items-center justify-center">
+  const create = (
+    <>
+      {" "}
       <div className=" text-8xl font-medium pb-[60px]">
         {" "}
         Create your Management Hub
@@ -104,7 +121,6 @@ export default () => {
       <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
         Management Hub is a Canister owned by your Internet Identity.
       </div>
-
       <div className="text-5xl text-wrap font-light pb-6 w-[800px]">
         Please transfer some ICP to this address first:
       </div>
@@ -128,9 +144,8 @@ export default () => {
       <div className="text-5xl  text-wrap font-light pb-12 w-[800px]">
         Convert ICP to cycles to create a Management Hub. (It takes 20-30s)
       </div>
-
       <div className="w-[260px]">
-        <div className="text-4xl  text-wrap font-light pb-2 ">Hub name</div>
+        <div className="text-4xl  text-wrap font-medium pb-2 ">Hub name</div>
         <Input
           id="asdsdssd"
           placeholder="maximum 8 characters"
@@ -142,9 +157,8 @@ export default () => {
       </div>
       <Gap height={20} />
       <div className="w-[260px]">
-        <div className="text-4xl  text-wrap font-light pb-2">ICP amout:</div>
+        <div className="text-4xl text-wrap font-medium pb-2">ICP amout:</div>
         <Input
-          id="asdsdssd"
           type="number"
           placeholder="minimum 0.2 icp"
           onChange={(e) => {
@@ -172,6 +186,80 @@ export default () => {
         Create
       </button>
       <Gap height={20} />
+    </>
+  );
+
+  const add = (
+    <>
+      <div className=" text-8xl font-medium pb-[60px]">
+        {" "}
+        Add an exsiting Management Hub
+      </div>
+      <div className="flex flex-col px-72 items-center">
+        <div className="text-4xl font-medium w-full flex">
+          Input management hub canister id（Make sure you are one of the
+          controllers）{" "}
+        </div>
+        <Gap height={24} />
+        <Input
+          placeholder="xxxxx-...-xxx"
+          onChange={(e) => {
+            setIsValid(checkPrincipal(e.target.value));
+            setAddId(e.target.value);
+          }}
+          value={addId}
+        />
+        <Gap height={24} />
+        <div className="text-4xl font-medium w-full flex">Hub name</div>
+        <Gap height={24} />
+        <Input
+          placeholder="abc"
+          onChange={(e) => {
+            setIsValid(e.target.value.length < 9);
+            setAddName(e.target.value);
+          }}
+          value={addName}
+        />
+        <Gap height={24} />
+        <Button
+          onClick={() => {
+            toast.promise(DktApi.addHub(addId, addName), {
+              pending: "adding Management Hub",
+              success: {
+                render() {
+                  DktApi.getBucket();
+                  return `add Management hub success !`;
+                },
+              },
+              error: {
+                render({ data }) {
+                  setLoading(false);
+                  return `🤯 ${data}`;
+                },
+              },
+            });
+            setAddName("");
+            setAddId("");
+          }}
+          disabled={!isValid}
+        >
+          Add
+        </Button>
+      </div>
+    </>
+  );
+  return (
+    <div className="flex flex-col w-full h-screen items-center">
+      <div className="modal-content py-24 text-left px-6">
+        <Box className="">
+          <Tabs value={value} onChange={handleChange} centered>
+            <Tab label="Create" />
+            <Tab label="Add" />
+          </Tabs>
+        </Box>
+      </div>
+      <Gap height={12} />
+      {value ? add : create}
     </div>
   );
 };
