@@ -101,9 +101,13 @@ class Bucket {
 
   async getStatus(): Promise<any> {
     const res = await (await this.getActor()).getStatus();
+    console.log("status", res);
     return res;
   }
-
+  async getOwners(): Promise<any> {
+    const res = await (await this.getActor()).getOwners();
+    return res;
+  }
   async getVersion(): Promise<any> {
     const res = await (await this.getActor()).getVersion();
     return res;
