@@ -9,6 +9,7 @@ interface Props {
   error?: string;
   value: any;
   type?: string;
+  disabled?: boolean;
   readOnly?: boolean;
 }
 
@@ -20,6 +21,7 @@ export const Input = ({
   value,
   error,
   type,
+  disabled,
   readOnly,
 }: Props) => {
   return (
@@ -34,6 +36,7 @@ export const Input = ({
         }
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
+        disabled={disabled}
         required
       />
       {error ? (

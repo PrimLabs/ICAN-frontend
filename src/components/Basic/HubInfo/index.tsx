@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Button, Gap, Input } from "@/components";
 import Icon from "@/icons/Icon";
 import { BucketApi } from "@/apis/bucketApi";
+import { toast } from "react-toastify";
+import { Principal } from "@dfinity/principal";
 
 interface Props {
   setOpen: Function;
@@ -12,24 +14,51 @@ interface Props {
 }
 export const HubInfo = ({ setOpen, open, version, setUpgrade }: Props) => {
   const { hubId, name }: any = useParams();
-  const [controllers, setControllers] = useState<Array<any>>([""]);
+  const [controllers, setControllers] = useState<Array<Principal | string>>([]);
+  const [initNumber, setInitNumber] = useState<number>(0);
+  const checkPrincipal = (text: string) => {
+    try {
+      Principal.fromText(text);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
   const changeControllers = (controller: string, index: number) => {
-    let tControllers: Array<string> = controllers;
-    tControllers[index] = controller;
-    setControllers(controllers);
+    if (checkPrincipal(controller)) {
+      let tControllers: Array<any> = controllers;
+      tControllers[index] = Principal.fromText(controller);
+      setControllers(controllers);
+    }
   };
   const removeController = (index: number) => {
-    let tControllers = controllers;
+    let tControllers: Array<any> = controllers;
     tControllers.splice(index, 1);
     setControllers([...tControllers]);
+  };
+  const handleAdd = () => {};
+  const handleRemove = () => {};
+  const handleClickChange = () => {
+    toast.promise(BucketApi(hubId).changeControllers(controllers), {
+      pending: "changing owners 😄",
+      success: {
+        render() {
+          return `success !`;
+        },
+      },
+      error: {
+        render({ data }) {
+          return `🤯 ${data}`;
+        },
+      },
+    });
   };
   const fetch = async () => {
     const res = await BucketApi(hubId).getOwners();
     setControllers(res);
+    setInitNumber(res.length);
   };
-  useEffect(() => {
-    fetch();
-  }, []);
+  useEffect(() => {}, [open]);
   return (
     <div className="flex flex-col justify-center">
       <div className="flex justify-between items-center pb-[20px]">
@@ -71,38 +100,57 @@ export const HubInfo = ({ setOpen, open, version, setUpgrade }: Props) => {
       </div>
       <div>
         <label className="block mb-2 font-medium text-4xl text-gray-900 dark:text-gray-300">
-          Controllers
+          Owners
         </label>
         {controllers.map((v, index) => {
           return (
-            <div
-              key={index}
-              className={"relative flex items-center mt-[1.125rem]"}
-            >
-              <Input
-                id="controllers"
-                onChange={(e) =>
-                  changeControllers(e.target.value.trim(), index)
-                }
-                placeholder={String(v)}
-                value={String(v)}
-              />
-              <div
-                className={"absolute  right-0.5 cursor-pointer flex"}
-                onClick={() => removeController(index)}
-              >
-                <Icon name={"minus"} />
+            <div key={index}>
+              <div className={"flex justify-center items-center mt-6"}>
+                <Input
+                  id="controllers"
+                  onChange={(e) =>
+                    changeControllers(e.target.value.trim(), index)
+                  }
+                  placeholder={String(v)}
+                  disabled={index <= initNumber}
+                  value={String(v)}
+                />
+                <Gap width={6} />
+                <Button
+                  disabled={index === 0}
+                  height="h-16"
+                  onClick={() => {
+                    if (index < initNumber) handleRemove();
+                    if (index === initNumber) handleAdd();
+                  }}
+                >
+                  {index < initNumber ? "remove" : "add"}
+                </Button>
               </div>
+              {index === initNumber - 1 ? (
+                <div
+                  className={"flex  mb-12 justify-center mt-0.5 cursor-pointer"}
+                  onClick={() => setControllers([...controllers, ""])}
+                >
+                  <Icon name={"add"} width={"20"} height={"20"} />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           );
         })}
-        <div
-          className={"flex justify-center mt-0.5 cursor-pointer"}
-          onClick={() => setControllers([...controllers, ""])}
-        >
-          <Icon name={"add"} width={"20"} height={"20"} />
-        </div>
       </div>
+      {/* <div className="flex justify-center">
+        <Button
+          width=" w-auto"
+          onClick={() => {
+            handleClickChange();
+          }}
+        >
+          update owners
+        </Button>
+      </div> */}
     </div>
   );
 };

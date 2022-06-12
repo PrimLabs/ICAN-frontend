@@ -1,6 +1,7 @@
 import { GetAgent } from "@/utils/getAgent";
 import { idlFactory as bucketIDL } from "@/did/bucket.did";
 import { Principal } from "@dfinity/principal";
+import { reject } from "lodash";
 
 class Bucket {
   private canisterId: string = "";
@@ -141,6 +142,20 @@ class Bucket {
   async canisterStatus(canisterId: Principal): Promise<any> {
     const res = await (await this.getActor()).canisterStatus(canisterId);
     return res;
+  }
+
+  async changeControllers(controllers: Array<any>): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await (await this.getActor()).changeOwner(controllers);
+        console.log(res);
+        if (res.err) reject(Object.keys(res.err)[0]);
+        resolve(res);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
   }
   async updateCanisterSettings(
     canisterId: Principal,

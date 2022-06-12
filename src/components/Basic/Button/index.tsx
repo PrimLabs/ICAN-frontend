@@ -19,7 +19,7 @@ export const Button = ({
         width ? width : "w-48"
       } ${
         height ? height : " h-20"
-      } rounded-lg text-white text-4xl hover:bg-blue-300`}
+      } rounded-lg flex justify-center items-center text-white px-6 text-4xl hover:bg-blue-300`}
       onClick={() => onClick()}
       disabled={disabled}
     >
