@@ -157,6 +157,35 @@ class Bucket {
       }
     });
   }
+
+  async addOwner(controller: Principal | string): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await (await this.getActor()).addOwner(controller);
+        console.log(res);
+        if (res.err) reject(Object.keys(res.err)[0]);
+        resolve(res);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
+  async removeOwner(controller: Principal | string): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await (await this.getActor()).removeOwner(controller);
+        console.log(res);
+        if (res.err) reject(Object.keys(res.err)[0]);
+        resolve(res);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   async updateCanisterSettings(
     canisterId: Principal,
     freezing_threshold: number,

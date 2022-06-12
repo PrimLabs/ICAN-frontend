@@ -36,8 +36,43 @@ export const HubInfo = ({ setOpen, open, version, setUpgrade }: Props) => {
     tControllers.splice(index, 1);
     setControllers([...tControllers]);
   };
-  const handleAdd = () => {};
-  const handleRemove = () => {};
+  const handleAdd = () => {
+    toast.promise(
+      BucketApi(hubId).addOwner(controllers[controllers.length - 1]),
+      {
+        pending: "adding owner 😄",
+        success: {
+          render() {
+            fetch();
+            return `success !`;
+          },
+        },
+        error: {
+          render({ data }) {
+            fetch();
+            return `🤯 ${data}`;
+          },
+        },
+      }
+    );
+  };
+  const handleRemove = (index: number) => {
+    toast.promise(BucketApi(hubId).removeOwner(controllers[index]), {
+      pending: "removing owner 😄",
+      success: {
+        render() {
+          fetch();
+          return `success !`;
+        },
+      },
+      error: {
+        render({ data }) {
+          fetch();
+          return `🤯 ${data}`;
+        },
+      },
+    });
+  };
   const handleClickChange = () => {
     toast.promise(BucketApi(hubId).changeControllers(controllers), {
       pending: "changing owners 😄",
@@ -120,7 +155,7 @@ export const HubInfo = ({ setOpen, open, version, setUpgrade }: Props) => {
                   disabled={index === 0}
                   height="h-16"
                   onClick={() => {
-                    if (index < initNumber) handleRemove();
+                    if (index < initNumber) handleRemove(index);
                     if (index === initNumber) handleAdd();
                   }}
                 >
