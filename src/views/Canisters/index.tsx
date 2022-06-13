@@ -141,6 +141,9 @@ export const Canisters = () => {
             </div>
           </div>
         </div>
+        <div className="flex align-center text-5xl font-medium pb-[40px]">
+          Canisters
+        </div>
         <div className="flex items-center justify-between h-[40px] mb-[20px] px-[40px] ">
           <div className="w-[120px] text-5xl font-medium">Name</div>
           <div className="w-[120px] text-5xl font-medium">Status</div>

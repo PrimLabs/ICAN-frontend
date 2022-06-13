@@ -1,7 +1,7 @@
 import { width } from "@mui/system";
 import "./Icon.css";
 
-export type Name = "add"|"login"|"account"|"file"|"station"|"spin"|"discord"|"twitter"|"github"|"document"|"link"|"refresh"|"home"|"minus"|"mail"|"more";
+export type Name = "add"|"login"|"account"|"file"|"station"|"spin"|"discord"|"twitter"|"github"|"document"|"link"|"refresh"|"home"|"minus"|"mail"|"more"|"switch";
 
 interface Props {
     name: Name;
@@ -79,6 +79,10 @@ const Icon = ({ name, bg, color, width, height,spin }: Props) => {
         case "more":
             return <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+          </svg>
+        case "switch": 
+            return <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
         default:
             return null;
