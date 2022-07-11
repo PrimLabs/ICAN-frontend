@@ -2,7 +2,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./views";
 import "./index.css"
-// import store from "./redux/store";
 import { fontResize } from "./utils/fontResize";
 import rewriteFixed from "./utils/rewriteFixed";
 import { ProvideAuth } from "./usehooks/useAuth";
