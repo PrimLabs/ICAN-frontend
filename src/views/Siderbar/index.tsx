@@ -14,6 +14,7 @@ import { RootState } from "@/redux/store";
 export const SiderBar = () => {
   const [profile, setProfile] = React.useState<boolean>(false);
   const [hubs, setHubs] = React.useState<any>();
+  const [open, setOpen] = React.useState<boolean>(false);
   const { buckets } = useSelector((state: RootState) => state);
   const history = useHistory();
   const {
@@ -41,80 +42,129 @@ export const SiderBar = () => {
         <Profile open={profile} />
       </ModalWrap>
 
-      <div className="fixed h-full w-[120px]  top-1 rounded shadow-2xl bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-25 border border-gray-200 flex flex-col justify-start items-center overflow-x-visible overflow-y-scroll noBar">
-        <Gap height={40} />
-
-        <ToolTip title="home" placement="right">
+      <div
+        className={`fixed h-full ${
+          open ? "w-[200px]" : "w-[100px]"
+        } top-1 rounded shadow-2xl bg-white bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-25 border border-gray-200 flex flex-col justify-start items-center overflow-x-visible overflow-y-scroll noBar`}
+      >
+        <Gap height={20} />
+        {open ? (
           <div
-            className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
+            className="mb-[20px] rounded-[12px] h-[40px] w-[180px] flex justify-center items-center text-2xl p-12 gap-10 hover:shadow cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            <Icon name="left" width="24" />
+          </div>
+        ) : (
+          <div
+            className="mb-[20px] rounded-[12px] h-[40px] w-[80px] flex justify-center items-center text-2xl p-12 gap-10 hover:shadow cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <Icon name="right" width="24" />
+          </div>
+        )}
+        {open ? (
+          <div
+            className="mb-[20px] rounded-[12px] h-[40px] w-[180px] flex items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-100"
             onClick={() => {
               history.push("/");
             }}
           >
-            <Icon name="home" />
+            <Icon name="home" width="24" /> Home
           </div>
-        </ToolTip>
+        ) : (
+          <div
+            className="mb-[20px] rounded-[12px] h-[40px] w-[80px] flex justify-center items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            <Icon name="home" width="24" />
+          </div>
+        )}
 
         {isAuth ? (
-          <>
-            <ToolTip title="profile" placement="right">
-              <div
-                data-tooltip-target="tooltip-profile"
-                data-tooltip-placement="right"
-                className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-                onClick={() => {
-                  setProfile(true);
-                }}
-              >
-                <Icon name="account" />
-              </div>
-            </ToolTip>
-          </>
-        ) : (
-          <ToolTip title="login" placement="right">
+          open ? (
             <div
-              className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-              onClick={() => IILogIn()}
+              className="mb-[20px] rounded-[12px] h-[40px] w-[180px] flex items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-50"
+              onClick={() => {
+                setProfile(true);
+              }}
             >
-              <Icon name="login" />
+              <Icon name="account" width="24" /> Profile
             </div>
-          </ToolTip>
-        )}
-        <ToolTip title="create hub" placement="right">
+          ) : (
+            <div
+              className="mb-[20px] rounded-[12px] h-[40px] w-[80px] flex justify-center items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-50"
+              onClick={() => {
+                setProfile(true);
+              }}
+            >
+              <Icon name="account" width="24" />
+            </div>
+          )
+        ) : open ? (
           <div
-            className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
+            className="mb-[20px] rounded-[12px] h-[40px] w-[180px] flex items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-50"
+            onClick={() => IILogIn()}
+          >
+            <Icon name="login" /> Login
+          </div>
+        ) : (
+          <div
+            className="mb-[20px] rounded-[12px] h-[40px] w-[80px] flex justify-center items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-50"
+            onClick={() => IILogIn()}
+          >
+            <Icon name="login" />
+          </div>
+        )}
+        {open ? (
+          <div
+            className="mb-[20px] rounded-[12px] h-[40px] w-[180px] flex items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-100"
             onClick={() => {
               history.push("/createhub");
             }}
           >
-            <Icon name="add" />
+            <Icon name="add" width="24" /> Create hub
           </div>
-        </ToolTip>
-
+        ) : (
+          <div
+            className="mb-[20px] rounded-[12px] h-[40px] w-[80px] flex justify-center items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              history.push("/createhub");
+            }}
+          >
+            <Icon name="add" width="24" />
+          </div>
+        )}
         {isAuth &&
           buckets.map((v, k) => {
-            return (
-              <ToolTip title={`hub ${v[0]}`} placement="right">
-                <div
-                  key={k}
-                  className="bg-blue-100 mb-[40px] rounded h-[90px] w-[90px] flex justify-center items-center hover:shadow hover: cursor-pointer"
-                  onClick={() => {
-                    history.push(`/hub/${v[0]}/${v[1]}`);
-                  }}
-                >
-                  <Icon name="station" />
-                </div>
-              </ToolTip>
+            return open ? (
+              <div
+                key={k}
+                className="mb-[20px] rounded-[12px] h-[40px] w-[180px] flex items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-100"
+                onClick={() => {
+                  history.push(`/hub/${v[0]}/${v[1]}`);
+                }}
+              >
+                <Icon name="station" width="24" /> Hub {v[0]}
+              </div>
+            ) : (
+              <div
+                key={k}
+                className="mb-[20px] rounded-[12px] h-[40px] w-[80px] flex  justify-center items-center text-2xl p-12 gap-10 hover:shadow hover: cursor-pointer hover:bg-slate-100"
+                onClick={() => {
+                  history.push(`/hub/${v[0]}/${v[1]}`);
+                }}
+              >
+                <Icon name="station" width="24" />
+              </div>
             );
           })}
-        <div
-          id={"tooltip-hub"}
-          role="tooltip"
-          className="inline-block absolute invisible z-10 py-2 px-3 text-2xl font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-        >
-          hub
-          <div className="tooltip-arrow" data-popper-arrow></div>
-        </div>
       </div>
     </>
   );
