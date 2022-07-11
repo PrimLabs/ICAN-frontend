@@ -28,7 +28,7 @@ export const useProvideAuth = (authClient): Props => {
     const [principal, setPrincipal] = useState("");
     const [authenticated, setAuthenticated] = useState(false);
     const [subAccountId, setSubAccountId] = useState("");
-  
+
     useEffect(() => {
        if (!isAuthClientReady)
         authClient.create().then(() => {
@@ -53,7 +53,7 @@ export const useProvideAuth = (authClient): Props => {
     useEffect(() => {
         authClient.setOwnerPrincipal(principal);
     }, [principal]);
-  
+
     const IILogIn = async (): Promise<{ message?: string; status?: number } | undefined> => {
         if (!authClient) return {message: "connect error"};
         const identity = await authClient.login();
@@ -70,7 +70,7 @@ export const useProvideAuth = (authClient): Props => {
         }
     };
 
-   
+
     const logOut = async (): Promise<void> => {
         // if (!authClient.ready) return;
         await authClient.logout();
